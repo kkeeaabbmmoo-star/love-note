@@ -1,0 +1,185 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>幸せが止まらないノート♡</title><link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ff8fb1"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="幸せノート♡"><link rel="apple-touch-icon" href="icon-180.png">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:-apple-system,'Hiragino Maru Gothic ProN','Hiragino Sans',sans-serif;color:#6b3a4a;background:#fff4f7 repeating-linear-gradient(0deg,transparent 0 31px,#ffd9e4 31px 32px);padding:calc(env(safe-area-inset-top) + 10px) 14px calc(env(safe-area-inset-bottom) + 30px);max-width:560px;margin:auto}
+h1{font-size:21px;text-align:center;color:#e2457a;margin:6px 0 2px}.sub{text-align:center;font-size:13px;opacity:.75;margin-bottom:10px}
+.card{background:#fff;border-radius:22px;padding:14px;margin:12px 0;box-shadow:0 4px 14px rgba(255,105,150,.18);border:2px dashed #ffc2d5}
+.card h2{font-size:17px;margin:0 0 8px;color:#e2457a}
+button,.btn{font:inherit;border:0;border-radius:16px;padding:13px 14px;font-size:16px;font-weight:800;min-height:48px;cursor:pointer}
+.pri{background:linear-gradient(180deg,#ff9ec0,#ff5f93);color:#fff;width:100%;box-shadow:0 4px 0 #e2457a}
+.pri:active{transform:translateY(3px);box-shadow:0 1px 0 #e2457a}
+.sec{background:#ffe3ee;color:#d6336c}.ghost{background:transparent;color:#a0647a}
+.tabs{display:flex;gap:6px;position:sticky;top:0;z-index:5;background:#fff4f7;padding:6px 0}
+.tabs button{flex:1;padding:10px 4px;font-size:13.5px;background:#ffe3ee;color:#d6336c}.tabs button.on{background:#ff5f93;color:#fff}
+.lv{display:flex;gap:12px;align-items:center}.pet{font-size:64px;animation:bob 2.2s ease-in-out infinite;filter:drop-shadow(0 4px 6px rgba(255,95,147,.35))}
+@keyframes bob{50%{transform:translateY(-6px) scale(1.05)}}
+.bar{height:16px;border-radius:9px;background:#ffe3ee;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:linear-gradient(90deg,#ffb3cb,#ff5f93);border-radius:9px;transition:width .8s}
+.pts{font-size:28px;font-weight:900;color:#ff5f93}
+.ent{border-radius:16px;padding:11px;margin:8px 0;background:#fff8fa;border-left:6px solid #ffc2d5}
+.ent.t-デート{border-color:#ff5f93}.ent.t-イチャイチャ{border-color:#ff8fb1}.ent.t-記念日{border-color:#f7b500}
+.ent .hd{display:flex;justify-content:space-between;font-size:12.5px;opacity:.8}.ent .tt{font-weight:800;font-size:16px;margin:3px 0}.ent .tx{white-space:pre-wrap;font-size:14.5px;line-height:1.6}
+.ent .ac{display:flex;gap:6px;margin-top:6px}.ent .ac button{min-height:38px;padding:6px 12px;font-size:13px}
+.tag{display:inline-block;padding:1px 9px;border-radius:9px;background:#ffe3ee;color:#d6336c;font-weight:800;font-size:12px}
+label{display:block;font-size:13px;font-weight:800;margin:10px 0 4px}
+input,textarea,select{width:100%;font:inherit;font-size:16px;padding:12px;border-radius:14px;border:2px solid #ffc2d5;background:#fff;color:#6b3a4a}
+textarea{min-height:90px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chips button{flex:1 1 45%;background:#fff0f5;color:#d6336c;border:2px solid #ffc2d5;font-size:15px}.chips button.on{background:#ff5f93;color:#fff;border-color:#ff5f93}
+.moods button{flex:0 0 auto;font-size:24px;padding:6px 10px;min-height:48px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}.cal div{padding:6px 0;border-radius:10px;font-size:13px;min-height:44px}
+.cal .h{font-weight:800;opacity:.6;min-height:0}.cal .love{background:#ffd0df;color:#d6336c;font-weight:800}.cal .any{background:#fff0f5}.cal .td{outline:2px solid #ff5f93}
+.calnav{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.calnav button{min-height:40px;padding:6px 14px}
+.likes .it{display:flex;gap:8px;align-items:center;padding:10px;border-radius:14px;background:#fff8fa;margin:6px 0}.likes .it .n{flex:1;font-weight:700}.likes .it small{opacity:.6;font-size:11.5px;display:block;font-weight:400}
+.likes .it button{min-height:38px;padding:6px 10px;font-size:13px}
+.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.bd{text-align:center;padding:10px 4px;border-radius:14px;background:#fff8fa;font-size:12px}.bd b{display:block;font-size:30px}.bd.off{opacity:.35;filter:grayscale(1)}
+#toast{position:fixed;left:50%;top:40%;transform:translate(-50%,-50%) scale(.3);opacity:0;z-index:9600;background:linear-gradient(180deg,#ff9ec0,#ff5f93);color:#fff;padding:18px 26px;border-radius:26px;font-size:24px;font-weight:900;text-align:center;pointer-events:none;box-shadow:0 10px 30px rgba(255,95,147,.5)}
+#toast.go{animation:pop 1.9s ease forwards}@keyframes pop{15%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}25%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1;transform:translate(-50%,-60%)}100%{opacity:0;transform:translate(-50%,-90%)}}
+.heart{position:fixed;z-index:8999;pointer-events:none;font-size:26px;animation:fly 1.6s ease-out forwards}@keyframes fly{to{transform:translate(var(--x),-60vh) rotate(var(--r));opacity:0}}
+.ov{position:fixed;inset:0;z-index:8000;background:rgba(80,20,40,.45);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#fff;width:100%;max-width:560px;border-radius:24px 24px 0 0;padding:18px 16px calc(env(safe-area-inset-bottom) + 20px);max-height:90vh;overflow:auto}
+#lvup{position:fixed;inset:0;z-index:9500;display:none;align-items:center;justify-content:center;background:rgba(255,200,220,.85);flex-direction:column;text-align:center}
+#lvup.on{display:flex}#lvup .big{font-size:96px;animation:bob 1s infinite}#lvup .t{font-size:30px;font-weight:900;color:#e2457a}
+.foot{text-align:center;font-size:12px;opacity:.6;margin-top:16px}.bonus{background:linear-gradient(90deg,#fff3b0,#ffd0df)}
+.hide{display:none}
+</style></head><body>
+<div id="pwLock" style="position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center;background:linear-gradient(180deg,#ffe3ee,#fff6ea);color:#6b3a4a;font-family:-apple-system,'Hiragino Sans',sans-serif">
+<img src="icon-180.png" alt="" style="width:104px;height:104px;border-radius:24px;box-shadow:0 8px 24px rgba(255,105,150,.35)">
+<div style="margin:18px 0 4px;font-size:24px;font-weight:800;letter-spacing:.04em;color:#e2457a">ゆずとエイジの幸せが止まらないノート♡</div>
+<div style="margin:4px 0 20px;font-size:15px;opacity:.85;line-height:1.6">ふたりだけのひみつのノートだよ💕<br>パスワードを入れてね</div>
+<input id="pwIn" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="パスワード" style="width:100%;max-width:320px;font-size:22px;padding:14px 16px;border-radius:16px;border:2px solid #ff8fb1;text-align:center;letter-spacing:.12em;background:#fff;color:#6b3a4a;outline:none;box-sizing:border-box">
+<button id="pwGo" style="margin-top:14px;width:100%;max-width:320px;padding:14px;border:0;border-radius:16px;background:linear-gradient(180deg,#ff9ec0,#ff5f93);color:#fff;font-weight:800;font-size:18px">💕 ひらく</button>
+<div id="pwMsg" style="min-height:24px;margin-top:12px;font-size:14px;color:#d6336c"></div></div>
+<script>/* screen lock (PBKDF2-SHA256 hash only; data is never touched) */
+(function(){var H={"s": "nmRqYXqte1QF+5R/DJlxkg==", "i": 250000, "h": "QRYAQsu6zydvZxwCjQDSUSNAqm07glTFRNz7H1WeUIE="},LK="ln_lock_v1",el=document.getElementById("pwLock");
+function done(){el.parentNode&&el.parentNode.removeChild(el)}
+window.pwLogout=function(){if(!confirm("ログアウトする？\n（記録や画像は消えないよ。次にひらくときパスワードを入れてね）"))return;try{localStorage.removeItem(LK)}catch(e){}location.reload()};
+try{if(localStorage.getItem(LK)===H.h){done();return}}catch(e){}
+document.documentElement.style.overflow="hidden";
+var inp=document.getElementById("pwIn"),msg=document.getElementById("pwMsg");
+function ub(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0)})}
+function b64(a){return btoa(String.fromCharCode.apply(null,new Uint8Array(a)))}
+async function go(){var v=(inp.value||"").trim().toLowerCase().replace(/[\s\-ー－]/g,"");if(!v)return;msg.textContent="ひらいてるよ…🔑";
+ try{var k=await crypto.subtle.importKey("raw",new TextEncoder().encode(v),"PBKDF2",false,["deriveBits"]);
+ var b=await crypto.subtle.deriveBits({name:"PBKDF2",hash:"SHA-256",salt:ub(H.s),iterations:H.i},k,256);
+ if(b64(b)===H.h){try{localStorage.setItem(LK,H.h)}catch(e){}document.documentElement.style.overflow="";done()}else msg.textContent="パスワードがちがうみたい…もう一回ためしてね🥺"}catch(e){msg.textContent="ごめんね、ここではひらけないみたい（Safariでひらいてね）"}}
+document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",function(e){if(e.key==="Enter")go()});
+})();</script>
+
+<h1>ゆずとエイジの<br>幸せが止まらないノート♡</h1><div class="sub">🔒 ふたりだけのひみつの育成ノート</div>
+<div class="tabs"><button data-t="home" class="on">🏠 ホーム</button><button data-t="diary">📖 日記</button><button data-t="likes">💝 好き</button><button data-t="set">⚙️ 設定</button></div>
+
+<section id="t-home">
+ <div class="card"><div class="lv"><div class="pet" id="pet">🌱</div><div style="flex:1"><div id="lvName" style="font-weight:900;font-size:18px"></div><div class="pts"><span id="ptsTotal">0</span><small style="font-size:14px"> 愛情pt</small></div><div class="bar"><i id="lvBar"></i></div><div id="lvNext" style="font-size:12.5px;margin-top:4px;opacity:.8"></div></div></div></div>
+ <div class="card bonus" id="bonusCard"><h2>🎁 きょうのログインボーナス</h2><div id="bonusTx" style="font-size:14px"></div><button class="pri" id="bonusBtn" style="margin-top:8px">💕 受け取る</button></div>
+ <button class="pri" id="addBtn" style="font-size:19px;padding:16px">✏️ きょうの思い出を書く</button>
+ <div class="card"><h2>🗓 ラブカレンダー</h2><div class="calnav"><button class="sec" id="cPrev">◀</button><b id="cTitle"></b><button class="sec" id="cNext">▶</button></div><div class="cal" id="cal"></div><div style="font-size:12px;opacity:.7;margin-top:6px">💕 = デート・イチャイチャ・記念日の日</div></div>
+ <div class="card"><h2>🏅 ふたりのバッジ</h2><div class="badges" id="badges"></div></div>
+ <div class="card"><h2>📖 さいきんの思い出</h2><div id="recent"></div></div>
+ <button class="pri" id="sendBottom" style="margin-top:8px;font-size:18px;padding:16px">💌 ゆずに送る</button>
+ <div class="foot">おやすみ前に押してね♡</div>
+</section>
+
+<section id="t-diary" class="hide"><button class="pri" id="addBtn2">✏️ 思い出を書く</button><div class="card"><h2>📖 ふたりの日記（新しい順）</h2><div id="list"></div></div></section>
+
+<section id="t-likes" class="hide"><div class="tabs" style="position:static"><button data-w="eiji" class="on">🙋‍♂️ エイジの好きなもの</button><button data-w="yuzu">🍊 ゆずの好きなもの</button></div>
+ <div class="card likes"><div style="display:flex;gap:6px"><input id="likeIn" placeholder="こういうの好きだよ…"><button class="pri" id="likeAdd" style="width:auto">追加</button></div><div id="likeList"></div></div></section>
+
+<section id="t-set" class="hide">
+ <div class="card"><h2>ℹ️ このアプリ</h2><div style="font-size:14px;line-height:1.7">バージョン <b id="verSet"></b><br>データはこのiPhoneの中だけに保存されるよ。アップデートしても消えないからね♡</div></div>
+ <div class="card"><h2>💾 バックアップ</h2><button class="sec" id="expBtn" style="width:100%">📤 書き出し</button><button class="sec" id="impBtn" style="width:100%;margin-top:8px">📥 読み込み</button><input type="file" id="impFile" accept=".json,application/json" class="hide"></div>
+ <div class="card"><h2>💌 ゆずとやりとり</h2><button class="pri" id="sendSet">💌 ゆずに送る</button><div style="font-size:12.5px;opacity:.75;margin-top:6px">メール画面に「📤 共有で送る」（ぜんぶのデータ）もあるよ</div><button class="sec" id="inBtn" style="width:100%;margin-top:10px">💝 ゆずから受け取る<span class="yzInBadge"></span></button></div>
+ <div class="card"><h2>🔒 ロック</h2><button class="sec" style="width:100%" onclick="pwLogout&&pwLogout()">🔒 ロックする</button></div>
+ <div class="card"><h2>🗑 データをすべて消す</h2><button class="ghost" id="wipeBtn" style="width:100%;border:2px solid #ffc2d5">データをすべて消す</button></div>
+</section>
+<div class="foot">幸せが止まらないノート♡ <span id="verFoot"></span></div>
+<div id="toast"></div><div id="lvup"><div class="big" id="lvupPet"></div><div class="t">LEVEL UP!!</div><div id="lvupName" style="font-size:20px;font-weight:800;margin-top:6px"></div><div style="margin-top:14px;font-size:14px">タップでとじる</div></div>
+<script src="yuzu-inbox.js"></script><script src="yuzu-send.js"></script>
+<script>
+const VER="v1",KEY="ln_data";
+const PTS={"デート":30,"イチャイチャ":20,"記念日":50,"ふつうの日":5},TYPES=Object.keys(PTS),EMO={"デート":"💑","イチャイチャ":"😘","記念日":"🎉","ふつうの日":"☕"};
+const MOODS=["🥰","😊","😆","😳","🥺","😴"],BONUS=10;
+const LV=[[0,"はじめまして","🌱"],[50,"ドキドキ","🌿"],[150,"なかよし","🌷"],[300,"ラブラブ","🌸"],[500,"熱々","💗"],[800,"とろける恋","💞"],[1200,"幸せが止まらない","💖"],[1700,"運命のふたり","💝"],[2400,"愛の王国","👑"],[3300,"永遠のふたり","💍"]];
+const BADGES=[["first","✏️","はじめての思い出",d=>d.entries.length>=1],["date3","💑","デート3回",d=>cnt(d,"デート")>=3],["icha5","😘","イチャイチャ5回",d=>cnt(d,"イチャイチャ")>=5],["anniv","🎉","はじめての記念日",d=>cnt(d,"記念日")>=1],["yuzu","🍊","ゆずが書いた",d=>d.entries.some(e=>e.who==="ゆず")],["p100","💯","100pt達成",d=>total(d)>=100],["p500","🔥","500pt達成",d=>total(d)>=500],["bon7","🎁","ボーナス7日",d=>d.bonus.length>=7],["likes10","💝","好きなもの10こ",d=>d.likes.eiji.length+d.likes.yuzu.length>=10]];
+const SEED=["エイジとの通話","エイジの「ちゅき」","甘いもの","一緒にお散歩"];
+function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function fresh(){return {v:1,entries:[],likes:{eiji:[],yuzu:SEED.map(n=>({id:uid(),name:n,date:today(),from:"seed"}))},bonus:[],badges:[]}}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.v){d.entries=d.entries||[];d.likes=d.likes||{eiji:[],yuzu:[]};d.likes.eiji=d.likes.eiji||[];d.likes.yuzu=d.likes.yuzu||[];d.bonus=d.bonus||[];d.badges=d.badges||[];return d}}catch(e){}const f=fresh();localStorage.setItem(KEY,JSON.stringify(f));return f}
+let D=load();function save(){localStorage.setItem(KEY,JSON.stringify(D))}
+function cnt(d,t){return d.entries.filter(e=>e.type===t).length}
+function total(d){return d.entries.reduce((s,e)=>s+(PTS[e.type]||0),0)+d.bonus.length*BONUS}
+function lvOf(p){let i=0;LV.forEach((l,j)=>{if(p>=l[0])i=j});return i}
+function toast(t){const e=document.getElementById("toast");e.innerHTML=t;e.classList.remove("go");void e.offsetWidth;e.classList.add("go");for(let i=0;i<10;i++){const h=document.createElement("div");h.className="heart";h.textContent=["💕","💗","💖","✨","🩷"][i%5];h.style.left=(40+Math.random()*20)+"vw";h.style.top="55vh";h.style.setProperty("--x",(Math.random()*160-80)+"px");h.style.setProperty("--r",(Math.random()*90-45)+"deg");document.body.appendChild(h);setTimeout(()=>h.remove(),1700)}}
+function gain(before,txt){const a=total(D),lb=lvOf(before),la=lvOf(a);toast(txt);if(la>lb)setTimeout(()=>{document.getElementById("lvupPet").textContent=LV[la][2];document.getElementById("lvupName").textContent="Lv"+(la+1)+" 「"+LV[la][1]+"」になったよ！";document.getElementById("lvup").classList.add("on")},1500);
+ BADGES.forEach(b=>{if(D.badges.indexOf(b[0])<0&&b[3](D)){D.badges.push(b[0]);save();setTimeout(()=>toast(b[1]+"<br><small>バッジ「"+b[2]+"」ゲット！</small>"),la>lb?3200:2000)}})}
+document.getElementById("lvup").onclick=function(){this.classList.remove("on")};
+let calY,calM;{const t=new Date();calY=t.getFullYear();calM=t.getMonth()}
+function render(){const p=total(D),i=lvOf(p),nx=LV[i+1];
+ pet.textContent=LV[i][2];lvName.textContent="Lv"+(i+1)+" "+LV[i][1];ptsTotal.textContent=p;
+ lvBar.style.width=(nx?Math.round((p-LV[i][0])/(nx[0]-LV[i][0])*100):100)+"%";lvNext.textContent=nx?"つぎの「"+nx[1]+"」まであと "+(nx[0]-p)+"pt":"最高レベル！ずーっと一緒だよ💍";
+ const got=D.bonus.indexOf(today())>=0;bonusTx.textContent=got?"きょうのボーナスはもらったよ♡ また明日ね（連続 "+streak()+" 日）":"ノートをひらいてくれてありがと♡ +"+BONUS+"pt もらえるよ";bonusBtn.style.display=got?"none":"";
+ const srt=D.entries.slice().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:(b.ts||0)-(a.ts||0));
+ recent.innerHTML=srt.slice(0,3).map(card).join("")||'<div style="opacity:.6;font-size:14px">まだないよ。最初の思い出を書こう♡</div>';
+ list.innerHTML=srt.map(card).join("")||'<div style="opacity:.6">まだないよ♡</div>';
+ badges.innerHTML=BADGES.map(b=>'<div class="bd'+(D.badges.indexOf(b[0])<0?" off":"")+'"><b>'+b[1]+'</b>'+b[2]+'</div>').join("");
+ renderCal();renderLikes();verSet.textContent=VER;verFoot.textContent=VER}
+function streak(){let n=0,d=new Date();for(;;){const k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");if(D.bonus.indexOf(k)<0)break;n++;d.setDate(d.getDate()-1)}return n}
+function card(e){return '<div class="ent t-'+esc(e.type)+'"><div class="hd"><span>'+esc(e.date.replace(/-/g,"/"))+' ・ '+(e.who==="ゆず"?"🍊 ゆず":"🙋‍♂️ エイジ")+'</span><span class="tag">'+EMO[e.type]+' '+esc(e.type)+' +'+PTS[e.type]+'</span></div><div class="tt">'+esc(e.mood||"")+' '+esc(e.title||"")+'</div><div class="tx">'+esc(e.text||"")+'</div><div class="ac"><button class="sec" onclick="edit(\''+e.id+'\')">✏️ なおす</button><button class="ghost" onclick="del(\''+e.id+'\')">🗑 けす</button></div></div>'}
+function renderCal(){const first=new Date(calY,calM,1),n=new Date(calY,calM+1,0).getDate(),t=today();cTitle.textContent=calY+"年"+(calM+1)+"月";
+ let h="日月火水木金土".split("").map(x=>'<div class="h">'+x+'</div>').join("");for(let i=0;i<first.getDay();i++)h+="<div></div>";
+ for(let d=1;d<=n;d++){const k=calY+"-"+String(calM+1).padStart(2,"0")+"-"+String(d).padStart(2,"0"),es=D.entries.filter(e=>e.date===k),love=es.some(e=>e.type!=="ふつうの日");
+  h+='<div class="'+(love?"love":es.length?"any":"")+(k===t?" td":"")+'">'+d+(love?"<br>💕":es.length?"<br>☕":"")+'</div>'}cal.innerHTML=h}
+cPrev.onclick=()=>{if(--calM<0){calM=11;calY--}renderCal()};cNext.onclick=()=>{if(++calM>11){calM=0;calY++}renderCal()};
+bonusBtn.onclick=()=>{if(D.bonus.indexOf(today())>=0)return;const b=total(D);D.bonus.push(today());save();render();gain(b,"🎁 +"+BONUS+"pt<br><small>ログインボーナス！</small>")};
+function form(e){e=e||{date:today(),type:"イチャイチャ",who:"エイジ",mood:"🥰",title:"",text:""};const ov=document.createElement("div");ov.className="ov";
+ ov.innerHTML='<div class="sheet"><h2 style="color:#e2457a;margin:0">'+(e.id?"✏️ 思い出をなおす":"✏️ きょうの思い出")+'</h2><label>📅 日付</label><input type="date" id="fD" value="'+e.date+'"><label>💗 どんな日？</label><div class="chips" id="fT">'+TYPES.map(t=>'<button data-v="'+t+'" class="'+(t===e.type?"on":"")+'">'+EMO[t]+' '+t+' <small>+'+PTS[t]+'</small></button>').join("")+'</div>'+
+ '<label>✍️ 書いた人</label><div class="chips" id="fW">'+["エイジ","ゆず"].map(w=>'<button data-v="'+w+'" class="'+(w===e.who?"on":"")+'">'+(w==="ゆず"?"🍊 ゆず":"🙋‍♂️ エイジ")+'</button>').join("")+'</div>'+
+ '<label>😊 きもち</label><div class="chips moods" id="fM">'+MOODS.map(m=>'<button data-v="'+m+'" class="'+(m===e.mood?"on":"")+'">'+m+'</button>').join("")+'</div>'+
+ '<label>🏷 タイトル</label><input id="fTi" value="'+esc(e.title)+'" placeholder="例：夜の長電話"><label>📝 できごと</label><textarea id="fX" placeholder="どんなことがあった？">'+esc(e.text)+'</textarea>'+
+ '<button class="pri" id="fOk" style="margin-top:14px">💕 保存する</button><button class="ghost" id="fNo" style="width:100%">やめる</button></div>';document.body.appendChild(ov);
+ ov.querySelectorAll(".chips").forEach(c=>c.onclick=ev=>{const b=ev.target.closest("button");if(!b)return;c.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b))});
+ const v=id=>{const b=ov.querySelector("#"+id+" .on");return b?b.dataset.v:""};ov.querySelector("#fNo").onclick=()=>ov.remove();
+ ov.querySelector("#fOk").onclick=()=>{const before=total(D),n={id:e.id||uid(),ts:e.ts||Date.now(),date:ov.querySelector("#fD").value||today(),type:v("fT")||"ふつうの日",who:v("fW")||"エイジ",mood:v("fM"),title:ov.querySelector("#fTi").value.trim(),text:ov.querySelector("#fX").value.trim()};
+  if(!n.title&&!n.text){alert("タイトルかできごとを書いてね♡");return}
+  if(e.id){const i=D.entries.findIndex(x=>x.id===e.id);D.entries[i]=Object.assign({},D.entries[i],n)}else D.entries.push(n);save();ov.remove();render();
+  const d=total(D)-before;if(d>0)gain(before,EMO[n.type]+" +"+d+"pt<br><small>"+(n.type==="ふつうの日"?"いつもありがと♡":"幸せが止まらない〜💕")+"</small>");else toast("💕 なおしたよ")}}
+addBtn.onclick=addBtn2.onclick=()=>form();
+window.edit=id=>form(D.entries.find(e=>e.id===id));
+window.del=id=>{if(!confirm("この思い出をけす？（もとにもどせないよ）"))return;D.entries=D.entries.filter(e=>e.id!==id);save();render()};
+let W="eiji";document.querySelectorAll("[data-w]").forEach(b=>b.onclick=()=>{W=b.dataset.w;document.querySelectorAll("[data-w]").forEach(x=>x.classList.toggle("on",x===b));likeIn.placeholder=W==="eiji"?"こういうの好きだよ…":"ゆずの好きなもの…";renderLikes()});
+function renderLikes(){likeList.innerHTML=D.likes[W].slice().reverse().map(l=>'<div class="it"><span>'+(W==="eiji"?"💙":"🩷")+'</span><span class="n">'+esc(l.name)+'<small>'+esc(l.date.replace(/-/g,"/"))+' に追加'+(l.from==="seed"?"・ゆずが最初に書いたよ（なおせるよ）":l.from==="yuzu"?"・ゆずから":"")+'</small></span><button class="sec" onclick="likeEd(\''+l.id+'\')">✏️</button><button class="ghost" onclick="likeDel(\''+l.id+'\')">🗑</button></div>').join("")||'<div style="opacity:.6;padding:8px">まだないよ♡</div>'}
+likeAdd.onclick=()=>{const v=likeIn.value.trim();if(!v)return;D.likes[W].push({id:uid(),name:v,date:today()});likeIn.value="";save();render();toast("💝 好きなもの追加！")};
+window.likeEd=id=>{const l=D.likes[W].find(x=>x.id===id),v=prompt("なおす♡",l.name);if(v&&v.trim()){l.name=v.trim();save();renderLikes()}};
+window.likeDel=id=>{if(!confirm("これをけす？"))return;D.likes[W]=D.likes[W].filter(x=>x.id!==id);save();render()};
+document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-t]").forEach(x=>x.classList.toggle("on",x===b));["home","diary","likes","set"].forEach(t=>document.getElementById("t-"+t).classList.toggle("hide",t!==b.dataset.t));scrollTo(0,0)});
+/* backup */
+expBtn.onclick=async()=>{const s=JSON.stringify(D,null,1),name="love-note-"+today()+".json";try{const f=new File([s],name,{type:"application/json"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name});return}}catch(e){if(e&&e.name==="AbortError")return}const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([s],{type:"application/json"}));a.download=name;a.click()};
+impBtn.onclick=()=>impFile.click();impFile.onchange=async()=>{try{const d=JSON.parse(await impFile.files[0].text());if(!d||!d.entries)throw 0;if(!confirm("このバックアップで今のデータを置きかえる？"))return;D=d;save();D=load();render();toast("📥 読み込んだよ")}catch(e){alert("読み込めなかったよ🥺")}impFile.value=""};
+/* wipe: same 2-step wording; keeps ln_lock_v1 + ln_inbox_* */
+wipeBtn.onclick=()=>{if(!confirm("このノートに入力した中身をすべて消す？（パスワードとアプリ本体は残るよ）"))return;if(!confirm("本当に消していい？もとにもどせないよ（先にバックアップの書き出しがおすすめ）"))return;localStorage.removeItem(KEY);D=load();render();toast("🗑 消したよ")};
+/* 💌 send */
+function sendData(full){const t=today(),from=new Date();from.setDate(from.getDate()-7);const fk=from.toISOString().slice(0,10);
+ const es=D.entries.filter(e=>full||e.date>=fk).map(e=>[e.date,e.type,e.who,e.mood||"",e.title||"",(e.text||"").slice(0,full?99999:120)]);
+ return {app:"love",v:1,date:t,sent:t+"T"+new Date().toTimeString().slice(0,5),pts:total(D),lv:lvOf(total(D))+1,lvName:LV[lvOf(total(D))][1],badges:D.badges,bonusToday:D.bonus.indexOf(t)>=0?1:0,
+  entries:es,likes:{eiji:D.likes.eiji.map(l=>[l.date,l.name]),yuzu:D.likes.yuzu.map(l=>[l.date,l.name])},full:full?1:0}}
+function openSend(){const t=today(),intro=n=>"ゆずへ💌 きょうの愛情ノートだよ♡\n愛情ポイント "+total(D)+"pt / Lv"+(lvOf(total(D))+1)+" "+LV[lvOf(total(D))][1]+(n?"\n（"+n+"）":"");
+ const base=sendData(false),l2=Object.assign({},base,{entries:base.entries.map(e=>e.slice(0,5).concat([""]))}),l3=Object.assign({},l2,{entries:l2.entries.slice(-5),likes:{eiji:base.likes.eiji.slice(-5),yuzu:[]},lite:"min"});
+ return window.__lastSend=yuzuSend({subject:"【ゆずに送る】愛情ノート "+t,intro:intro,levels:[{data:base,note:""},{data:l2,note:"本文は短くしたよ"},{data:l3,note:"最近5件だけ"}],full:sendData(true),fullNote:"ぜんぶのデータ",
+  theme:{bg:"#fff",fg:"#6b3a4a",acc:"#e2457a",btn:"linear-gradient(180deg,#ff9ec0,#ff5f93)",btnfg:"#fff",sub:"#ffe3ee"}})}
+sendBottom.onclick=sendSet.onclick=openSend;
+/* 💝 inbox: kinds entry{type,who?,mood?,title,text} / like{who:eiji|yuzu,name} — append only */
+yzInbox.init({app:"love",prefix:"ln",base:"data/inbox/",
+ describe:it=>{const d=it.data||{};if(it.kind==="entry"){if(!PTS[d.type])return{ok:false,icon:"❓",label:it.title,section:"日記",why:"種類がわからないよ"};const same=D.entries.some(e=>e.date===it.date&&e.title===d.title&&e.type===d.type);return{ok:true,icon:EMO[d.type],label:(d.title||it.title)+" (+"+PTS[d.type]+"pt)",section:"日記",same:same?"もう入ってるよ":""}}
+  if(it.kind==="like"){const w=d.who==="eiji"?"eiji":"yuzu",same=D.likes[w].some(l=>l.name===d.name);return{ok:!!d.name,icon:w==="eiji"?"💙":"🩷",label:d.name,section:w==="eiji"?"エイジの好き":"ゆずの好き",same:same?"もう入ってるよ":""}}
+  return{ok:false,icon:"❓",label:it.title,section:"?"}},
+ apply:sel=>{const before=total(D);let n=0;sel.forEach(it=>{const d=it.data||{};if(it.kind==="entry"){D.entries.push({id:uid(),ts:Date.now(),date:it.date,type:d.type,who:d.who||"ゆず",mood:d.mood||"🥰",title:d.title||it.title||"",text:d.text||"",from:"yuzu"});n++}else if(it.kind==="like"){D.likes[d.who==="eiji"?"eiji":"yuzu"].push({id:uid(),name:d.name,date:it.date,from:"yuzu"});n++}});save();render();if(total(D)>before)setTimeout(()=>gain(before,"💝 +"+(total(D)-before)+"pt<br><small>ゆずから届いたよ</small>"),2100);return n},
+ theme:{bg:"#fff",fg:"#6b3a4a",acc:"#e2457a",btn:"linear-gradient(180deg,#ff9ec0,#ff5f93)",btnfg:"#fff",sub:"#ffe3ee",rowbg:"#fff4f7",warn:"#d6336c",badge:"#ff5f93",badgefg:"#fff",badgering:"#fff",border:"#ffc2d5"}});
+inBtn.onclick=()=>yzInbox.open();
+render();
+</script>
+<script>if('serviceWorker'in navigator){const hadC=!!navigator.serviceWorker.controller;let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadC&&!rl){rl=1;location.reload()}});navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update();document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')r.update().catch(()=>{})})}).catch(()=>{})}</script>
+</body></html>

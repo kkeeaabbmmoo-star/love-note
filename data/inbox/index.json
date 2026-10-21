@@ -1,0 +1,10 @@
+{
+ "v": 1,
+ "kdf": {
+  "alg": "PBKDF2-SHA256",
+  "iter": 200000,
+  "salt": "WvyA7D5WfsUERI7mHnK2VQ=="
+ },
+ "items": [],
+ "updated": "2026-10-21T10:58:18+09:00"
+}
