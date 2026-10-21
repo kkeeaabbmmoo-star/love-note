@@ -1,5 +1,5 @@
-const C='lovenote-v3';
-const ASSETS=['./','index.html','yuzu-inbox.js','manifest.webmanifest','icon-180.png','icon-192.png','icon-512.png','yuzu-send.js','bgm.mp3'];
+const C='lovenote-v4';
+const ASSETS=['./','index.html','yuzu-inbox.js','manifest.webmanifest','icon-180.png','icon-192.png','icon-512.png','yuzu-send.js','bgm.mp3','orgel.mp3','yuzu-music.js'];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(ASSETS)))});
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).origin!==location.origin)return;

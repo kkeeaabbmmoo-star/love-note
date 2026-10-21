@@ -119,7 +119,7 @@ async function go(){var v=(inp.value||"").trim().toLowerCase().replace(/[\s\-ー
 document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",function(e){if(e.key==="Enter")go()});
 })();</script>
 
-<div id="sky"></div><button id="bgmBtn" aria-label="BGM">🎵</button><div class="hero"><div class="spk">✨💖✨💕✨💖✨</div><h1>ゆずとエイジの<br>幸せが止まらないノート♡</h1><div class="sub">💞 超、超ラブラブ ふたりだけのひみつノート 💞</div></div>
+<div id="sky"></div><button id="bgmBtn" data-ym-btn aria-label="BGM">🎵</button><div class="hero"><div class="spk">✨💖✨💕✨💖✨</div><h1>ゆずとエイジの<br>幸せが止まらないノート♡</h1><div class="sub">💞 超、超ラブラブ ふたりだけのひみつノート 💞</div></div>
 <div class="tabs"><button data-t="home" class="on">🏠 ホーム</button><button data-t="diary">📖 日記</button><button data-t="likes">💝 好き</button><button data-t="game">🎮 ゲーム</button><button data-t="set">⚙️ 設定</button></div>
 
 <section id="t-home">
@@ -157,7 +157,7 @@ document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",functi
  <div class="card"><h2>🏆 エイジ vs ゆず</h2><div class="vs"><div>🙋‍♂️ エイジ<div class="big" id="bE">-</div></div><div style="font-size:26px">⚡</div><div>🍊 ゆず<div class="big" id="bY">-</div></div></div><div id="vsMsg" style="text-align:center;margin-top:8px;font-weight:800;color:#d6336c"></div><div id="rHist" style="font-size:13px;margin-top:8px"></div></div>
 </section>
 <section id="t-set" class="hide">
- <div class="card"><h2>🎵 BGM</h2><div style="font-size:13.5px;margin-bottom:8px">ゆずが作ったオリジナル曲だよ♡（右上の🎵でもON/OFFできるよ）</div><button class="sec" id="bgmSet" style="width:100%"></button></div>
+ <div class="card"><h2>🎵 音楽</h2><div style="font-size:13.5px;margin-bottom:8px">ゆずが作ったオリジナル曲だよ♡ 2曲から選べて、日替わりにもできるよ（右上の🎵でもON/OFFできるよ）</div><div id="ymCard"></div></div>
  <div class="card"><h2>ℹ️ このアプリ</h2><div style="font-size:14px;line-height:1.7">バージョン <b id="verSet"></b><br>データはこのiPhoneの中だけに保存されるよ。アップデートしても消えないからね♡</div></div>
  <div class="card"><h2>💾 バックアップ</h2><button class="sec" id="expBtn" style="width:100%">📤 書き出し</button><button class="sec" id="impBtn" style="width:100%;margin-top:8px">📥 読み込み</button><input type="file" id="impFile" accept=".json,application/json" class="hide"></div>
  <div class="card"><h2>💌 ゆずとやりとり</h2><button class="pri" id="sendSet">💌 ゆずに送る</button><div style="font-size:12.5px;opacity:.75;margin-top:6px">メール画面に「📤 共有で送る」（ぜんぶのデータ）もあるよ</div><button class="sec" id="inBtn" style="width:100%;margin-top:10px">💝 ゆずから受け取る<span class="yzInBadge"></span></button></div>
@@ -168,7 +168,7 @@ document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",functi
 <div id="toast"></div><div id="lvup"><div class="big" id="lvupPet"></div><div class="t">LEVEL UP!!</div><div id="lvupName" style="font-size:20px;font-weight:800;margin-top:6px"></div><div style="margin-top:14px;font-size:14px">タップでとじる</div></div>
 <script src="yuzu-inbox.js"></script><script src="yuzu-send.js"></script>
 <script>
-const VER="v3",LOOPLEN=43.63634920634921,KEY="ln_data";
+const VER="v4",LOOPLEN=43.63634920634921,KEY="ln_data";
 const PTS={"デート":30,"イチャイチャ":20,"記念日":50,"ふつうの日":5},TYPES=Object.keys(PTS),EMO={"デート":"💑","イチャイチャ":"😘","記念日":"🎉","ふつうの日":"☕"};
 const MOODS=["🥰","😊","😆","😳","🥺","😴"],BONUS=10,CAP=70,MOLE_PT=5;
 const LV=[[0,"はじめまして","🌱"],[60,"ドキドキ","🌿"],[200,"なかよし","🌷"],[450,"ラブラブ","🌸"],[850,"熱々","💗"],[1400,"とろける恋","💞"],[2200,"幸せが止まらない","💖"],[3300,"運命のふたり","💝"],[4800,"愛の王国","👑"],[7000,"永遠のふたり","💍"]];
@@ -256,22 +256,7 @@ inBtn.onclick=()=>yzInbox.open();
 (function(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;const sk=document.getElementById("sky"),H=["💕","💖","💗","✨","🩷","💞","⭐"];
  for(let i=0;i<14;i++){const e=document.createElement("i");e.textContent=H[i%H.length];e.style.left=Math.random()*100+"vw";e.style.fontSize=(14+Math.random()*18)+"px";e.style.animationDuration=(9+Math.random()*10)+"s";e.style.animationDelay=(-Math.random()*18)+"s";sk.appendChild(e)}
  for(let i=0;i<18;i++){const e=document.createElement("b");e.textContent="✦";e.style.left=Math.random()*100+"vw";e.style.top=Math.random()*100+"vh";e.style.fontSize=(8+Math.random()*10)+"px";e.style.animationDelay=(-Math.random()*2.4)+"s";sk.appendChild(e)}})();
-/* ===== BGM: original loop bgm.mp3 (Web Audio, gapless) ===== */
-(function(){const BK="ln_bgm";let on=localStorage.getItem(BK)!=="0",ctx=null,src=null,gain=null,buf=null,loading=null,started=false;
- const btn=document.getElementById("bgmBtn"),bs=document.getElementById("bgmSet");
- function ui(){btn.classList.toggle("off",!on);btn.textContent=on?"🎵":"🔇";bs.textContent=on?"🎵 BGM：ON（タップでOFF）":"🔇 BGM：OFF（タップでON）"}
- async function ensure(){if(!ctx){const A=window.AudioContext||window.webkitAudioContext;ctx=new A();gain=ctx.createGain();gain.gain.value=0.45;gain.connect(ctx.destination)}
-  if(!buf){loading=loading||fetch("bgm.mp3").then(r=>r.arrayBuffer()).then(a=>new Promise((ok,ng)=>ctx.decodeAudioData(a,ok,ng)));buf=await loading}}
- async function play(){try{await ensure();if(ctx.state!=="running")await ctx.resume();if(src||!on)return;
-  const d=buf.getChannelData(0);let n0=0;while(n0<d.length&&Math.abs(d[n0])<1e-4&&n0<buf.sampleRate*0.2)n0++;
-  src=ctx.createBufferSource();src.buffer=buf;src.loop=true;src.loopStart=n0/buf.sampleRate;src.loopEnd=Math.min(buf.duration,src.loopStart+LOOPLEN);
-  gain.gain.setValueAtTime(0,ctx.currentTime);gain.gain.linearRampToValueAtTime(0.45,ctx.currentTime+1.5);src.connect(gain);src.start(0,src.loopStart);started=true;window.__bgm={ctx,src}}catch(e){console.warn(e)}}
- function stop(){if(src){try{src.stop()}catch(e){}src.disconnect();src=null}}
- function toggle(){on=!on;localStorage.setItem(BK,on?"1":"0");ui();on?play():stop()}
- btn.onclick=e=>{e.stopPropagation();toggle()};bs.onclick=toggle;
- const first=()=>{if(on&&!started&&!document.getElementById("pwLock"))play()};document.addEventListener("pointerdown",first,true);document.addEventListener("touchend",first,true);
- document.addEventListener("visibilitychange",()=>{if(!ctx)return;if(document.hidden)ctx.suspend();else if(on)ctx.resume()});
- ui()})();
+/* ===== 音楽: yuzu-music.js (🎼オルゴール / 💕ふたりの曲) ===== */
 /* ===== 🏃 ラブラブマラソン ===== */
 const GOAL=50;let rs=null;
 function raceD(){D.race=D.race||{eiji:[],yuzu:[{date:"2026-10-21",sec:9.8,from:"seed"}]};return D.race}
@@ -318,4 +303,5 @@ couple(false);
 render();
 </script>
 <script>if('serviceWorker'in navigator){const hadC=!!navigator.serviceWorker.controller;let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadC&&!rl){rl=1;location.reload()}});navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update();document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')r.update().catch(()=>{})})}).catch(()=>{})}</script>
+<script>window.YM_CFG={onKey:"ln_bgm",trackKey:"ln_music_track",defTrack:"love",tracks:{orgel:{len:60}},locked:()=>!!document.getElementById("pwLock")};</script><script src="yuzu-music.js"></script><script>document.getElementById("ymCard").innerHTML=YuzuMusic.cardHTML();YuzuMusic.ui()</script>
 </body></html>
