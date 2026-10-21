@@ -137,6 +137,7 @@ document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",functi
  <div class="card"><h2>🗓 ラブカレンダー</h2><div class="calnav"><button class="sec" id="cPrev">◀</button><b id="cTitle"></b><button class="sec" id="cNext">▶</button></div><div class="cal" id="cal"></div><div style="font-size:12px;opacity:.7;margin-top:6px">💕 = デート・イチャイチャ・記念日の日</div></div>
  <div class="card"><h2>🏅 ふたりのバッジ</h2><div class="badges" id="badges"></div></div>
  <div class="card"><h2>📖 さいきんの思い出</h2><div id="recent"></div></div>
+ <div data-gy></div>
  <button class="pri" id="sendBottom" style="margin-top:8px;font-size:18px;padding:16px">💌 ゆずに送る</button>
  <div class="foot">おやすみ前に押してね♡</div>
 </section>
@@ -304,4 +305,5 @@ render();
 </script>
 <script>if('serviceWorker'in navigator){const hadC=!!navigator.serviceWorker.controller;let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadC&&!rl){rl=1;location.reload()}});navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update();document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')r.update().catch(()=>{})})}).catch(()=>{})}</script>
 <script>window.YM_CFG={onKey:"ln_bgm",trackKey:"ln_music_track",defTrack:"love",tracks:{orgel:{len:60}},locked:()=>!!document.getElementById("pwLock")};</script><script src="yuzu-music.js"></script><script>document.getElementById("ymCard").innerHTML=YuzuMusic.cardHTML();YuzuMusic.ui()</script>
+<script>window.GY_CFG={key:"ln_grok_yuzu",theme:{acc:"#e2457a",btn:"linear-gradient(180deg,#ff9ec0,#ff5f93)"}};</script><script src="grok-yuzu.js"></script>
 </body></html>
