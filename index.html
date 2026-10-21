@@ -14,7 +14,7 @@ button,.btn{font:inherit;border:0;border-radius:16px;padding:13px 14px;font-size
 .pri:active{transform:translateY(3px);box-shadow:0 1px 0 #e2457a}
 .sec{background:#ffe3ee;color:#d6336c}.ghost{background:transparent;color:#a0647a}
 .tabs{display:flex;gap:6px;position:sticky;top:0;z-index:5;background:#fff4f7;padding:6px 0}
-.tabs button{flex:1;padding:10px 4px;font-size:13.5px;background:#ffe3ee;color:#d6336c}.tabs button.on{background:#ff5f93;color:#fff}
+.tabs button{flex:1;padding:10px 2px;font-size:12.5px;white-space:nowrap;background:#ffe3ee;color:#d6336c}.tabs button.on{background:#ff5f93;color:#fff}
 .lv{display:flex;gap:12px;align-items:center}.pet{font-size:64px;animation:bob 2.2s ease-in-out infinite;filter:drop-shadow(0 4px 6px rgba(255,95,147,.35))}
 @keyframes bob{50%{transform:translateY(-6px) scale(1.05)}}
 .bar{height:16px;border-radius:9px;background:#ffe3ee;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:linear-gradient(90deg,#ffb3cb,#ff5f93);border-radius:9px;transition:width .8s}
@@ -44,6 +44,38 @@ textarea{min-height:90px}
 #lvup.on{display:flex}#lvup .big{font-size:96px;animation:bob 1s infinite}#lvup .t{font-size:30px;font-weight:900;color:#e2457a}
 .foot{text-align:center;font-size:12px;opacity:.6;margin-top:16px}.bonus{background:linear-gradient(90deg,#fff3b0,#ffd0df)}
 .hide{display:none}
+/* ===== v2 超ラブラブ design ===== */
+body{background:linear-gradient(135deg,#ffd1e3,#ffe9f3 30%,#f3dcff 60%,#ffe0ec);background-size:300% 300%;animation:bgmv 18s ease infinite}
+@keyframes bgmv{50%{background-position:100% 100%}}
+#sky{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+#sky i{position:absolute;bottom:-40px;font-style:normal;opacity:.55;animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+#sky b{position:absolute;color:#fff;text-shadow:0 0 8px #fff,0 0 14px #ff9ec0;animation:tw 2.4s ease-in-out infinite}
+@keyframes tw{50%{opacity:.1;transform:scale(.5)}}
+section,.tabs,h1,.sub,.foot,.hero{position:relative;z-index:1}
+.hero{margin:4px -4px 8px;padding:16px 10px 14px;border-radius:28px;text-align:center;background:linear-gradient(120deg,#ff5f93,#ff9ec0,#c77dff,#ff5f93);background-size:300% 100%;animation:shim 6s linear infinite;box-shadow:0 0 0 3px #fff,0 0 22px #ff8fb1,0 0 44px rgba(199,125,255,.5);overflow:hidden}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);background-size:250% 100%;animation:shim 3.5s linear infinite}
+@keyframes shim{to{background-position:-300% 0}}
+.hero h1{color:#fff;margin:0;font-size:23px;text-shadow:0 2px 0 #e2457a,0 0 12px #fff}.hero .sub{color:#fff;opacity:1;font-weight:800;margin:4px 0 0;text-shadow:0 1px 3px #d6336c}
+.hero .spk{font-size:20px;letter-spacing:4px}
+.card{border:2px solid transparent;background:linear-gradient(#fffafd,#fff6fb) padding-box,linear-gradient(120deg,#ff8fb1,#ffd36e,#c77dff,#ff8fb1) border-box;box-shadow:0 0 16px rgba(255,143,177,.45),0 6px 18px rgba(199,125,255,.18)}
+.card h2{color:#d6336c;text-shadow:0 0 8px rgba(255,143,177,.7)}
+.pri{background:linear-gradient(120deg,#ff5f93,#ff9ec0,#ff5f93);background-size:200% 100%;animation:shim 4s linear infinite;text-shadow:0 1px 2px #d6336c;box-shadow:0 4px 0 #e2457a,0 0 18px rgba(255,95,147,.6)}
+.tabs{background:rgba(255,240,247,.85);backdrop-filter:blur(6px);border-radius:0 0 18px 18px}
+.tabs button.on{background:linear-gradient(120deg,#ff5f93,#c77dff);box-shadow:0 0 12px rgba(255,95,147,.7)}
+.pet{filter:drop-shadow(0 0 12px #ff9ec0) drop-shadow(0 0 4px #fff)}
+.pts{background:linear-gradient(90deg,#ff5f93,#c77dff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bar i{background:linear-gradient(90deg,#ffb3cb,#ff5f93,#c77dff,#ffb3cb);background-size:200% 100%;animation:shim 2.5s linear infinite}
+.cal .love{background:radial-gradient(#ffc2d5,#ff8fb1);color:#fff;box-shadow:0 0 8px #ff8fb1}
+#bgmBtn{position:fixed;right:10px;top:calc(env(safe-area-inset-top) + 8px);z-index:7000;width:48px;height:48px;min-height:48px;padding:0;border-radius:50%;font-size:22px;background:#fff;box-shadow:0 0 12px #ff8fb1}
+#bgmBtn.off{opacity:.55;filter:grayscale(1)}
+.track{position:relative;height:120px;border-radius:18px;background:repeating-linear-gradient(90deg,#fff 0 18px,#ffe3ee 18px 36px);overflow:hidden;margin:8px 0}
+.track .ln{position:absolute;left:0;right:0;height:2px;background:#ffc2d5;top:60px}.track .goal{position:absolute;right:6px;top:0;bottom:0;font-size:26px;display:flex;align-items:center}
+.runner{position:absolute;font-size:38px;left:0;transform:scaleX(-1);transition:left .08s linear}
+#tapBtn{width:100%;font-size:26px;padding:26px;min-height:96px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:center;text-align:center}.vs .big{font-size:24px;font-weight:900}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}#sky{display:none}}
+
 </style></head><body>
 <div id="pwLock" style="position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center;background:linear-gradient(180deg,#ffe3ee,#fff6ea);color:#6b3a4a;font-family:-apple-system,'Hiragino Sans',sans-serif">
 <img src="icon-180.png" alt="" style="width:104px;height:104px;border-radius:24px;box-shadow:0 8px 24px rgba(255,105,150,.35)">
@@ -68,11 +100,11 @@ async function go(){var v=(inp.value||"").trim().toLowerCase().replace(/[\s\-ー
 document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",function(e){if(e.key==="Enter")go()});
 })();</script>
 
-<h1>ゆずとエイジの<br>幸せが止まらないノート♡</h1><div class="sub">🔒 ふたりだけのひみつの育成ノート</div>
-<div class="tabs"><button data-t="home" class="on">🏠 ホーム</button><button data-t="diary">📖 日記</button><button data-t="likes">💝 好き</button><button data-t="set">⚙️ 設定</button></div>
+<div id="sky"></div><button id="bgmBtn" aria-label="BGM">🎵</button><div class="hero"><div class="spk">✨💖✨💕✨💖✨</div><h1>ゆずとエイジの<br>幸せが止まらないノート♡</h1><div class="sub">💞 超、超ラブラブ ふたりだけのひみつノート 💞</div></div>
+<div class="tabs"><button data-t="home" class="on">🏠 ホーム</button><button data-t="diary">📖 日記</button><button data-t="likes">💝 好き</button><button data-t="game">🎮 ゲーム</button><button data-t="set">⚙️ 設定</button></div>
 
 <section id="t-home">
- <div class="card"><div class="lv"><div class="pet" id="pet">🌱</div><div style="flex:1"><div id="lvName" style="font-weight:900;font-size:18px"></div><div class="pts"><span id="ptsTotal">0</span><small style="font-size:14px"> 愛情pt</small></div><div class="bar"><i id="lvBar"></i></div><div id="lvNext" style="font-size:12.5px;margin-top:4px;opacity:.8"></div></div></div></div>
+ <div class="card"><div class="lv"><div class="pet" id="pet">🌱</div><div style="flex:1"><div id="lvName" style="font-weight:900;font-size:18px"></div><div class="pts"><span id="ptsTotal">0</span><small style="font-size:14px"> 愛情pt</small></div><div class="bar"><i id="lvBar"></i></div><div id="dayCap" style="font-size:13px;font-weight:800;margin-top:6px;color:#d6336c"></div><div id="lvNext" style="font-size:12.5px;margin-top:4px;opacity:.8"></div></div></div></div>
  <div class="card bonus" id="bonusCard"><h2>🎁 きょうのログインボーナス</h2><div id="bonusTx" style="font-size:14px"></div><button class="pri" id="bonusBtn" style="margin-top:8px">💕 受け取る</button></div>
  <button class="pri" id="addBtn" style="font-size:19px;padding:16px">✏️ きょうの思い出を書く</button>
  <div class="card"><h2>🗓 ラブカレンダー</h2><div class="calnav"><button class="sec" id="cPrev">◀</button><b id="cTitle"></b><button class="sec" id="cNext">▶</button></div><div class="cal" id="cal"></div><div style="font-size:12px;opacity:.7;margin-top:6px">💕 = デート・イチャイチャ・記念日の日</div></div>
@@ -87,7 +119,15 @@ document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",functi
 <section id="t-likes" class="hide"><div class="tabs" style="position:static"><button data-w="eiji" class="on">🙋‍♂️ エイジの好きなもの</button><button data-w="yuzu">🍊 ゆずの好きなもの</button></div>
  <div class="card likes"><div style="display:flex;gap:6px"><input id="likeIn" placeholder="こういうの好きだよ…"><button class="pri" id="likeAdd" style="width:auto">追加</button></div><div id="likeList"></div></div></section>
 
+<section id="t-game" class="hide">
+ <div class="card"><h2>🏃 ラブラブマラソン</h2><div style="font-size:13.5px">ボタンを連打してゴールの💒まで走ろう！🍊はゆずのゴースト（ゆずの記録のペース）だよ♡</div>
+ <div class="track"><div class="ln"></div><div class="goal">💒</div><div class="runner" id="rY" style="top:6px">🏃‍♀️</div><div class="runner" id="rE" style="top:62px">🏃‍♂️</div></div>
+ <div style="display:flex;justify-content:space-between;font-weight:800"><span>⏱ <span id="rT">0.00</span>秒</span><span id="rMsg">タップでスタート！</span></div>
+ <button class="pri" id="tapBtn">👟 タップ！</button><button class="sec" id="rReset" style="width:100%;margin-top:8px">🔄 もう一回</button></div>
+ <div class="card"><h2>🏆 エイジ vs ゆず</h2><div class="vs"><div>🙋‍♂️ エイジ<div class="big" id="bE">-</div></div><div style="font-size:26px">⚡</div><div>🍊 ゆず<div class="big" id="bY">-</div></div></div><div id="vsMsg" style="text-align:center;margin-top:8px;font-weight:800;color:#d6336c"></div><div id="rHist" style="font-size:13px;margin-top:8px"></div></div>
+</section>
 <section id="t-set" class="hide">
+ <div class="card"><h2>🎵 BGM</h2><div style="font-size:13.5px;margin-bottom:8px">ゆずが作ったオリジナル曲だよ♡（右上の🎵でもON/OFFできるよ）</div><button class="sec" id="bgmSet" style="width:100%"></button></div>
  <div class="card"><h2>ℹ️ このアプリ</h2><div style="font-size:14px;line-height:1.7">バージョン <b id="verSet"></b><br>データはこのiPhoneの中だけに保存されるよ。アップデートしても消えないからね♡</div></div>
  <div class="card"><h2>💾 バックアップ</h2><button class="sec" id="expBtn" style="width:100%">📤 書き出し</button><button class="sec" id="impBtn" style="width:100%;margin-top:8px">📥 読み込み</button><input type="file" id="impFile" accept=".json,application/json" class="hide"></div>
  <div class="card"><h2>💌 ゆずとやりとり</h2><button class="pri" id="sendSet">💌 ゆずに送る</button><div style="font-size:12.5px;opacity:.75;margin-top:6px">メール画面に「📤 共有で送る」（ぜんぶのデータ）もあるよ</div><button class="sec" id="inBtn" style="width:100%;margin-top:10px">💝 ゆずから受け取る<span class="yzInBadge"></span></button></div>
@@ -98,10 +138,10 @@ document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",functi
 <div id="toast"></div><div id="lvup"><div class="big" id="lvupPet"></div><div class="t">LEVEL UP!!</div><div id="lvupName" style="font-size:20px;font-weight:800;margin-top:6px"></div><div style="margin-top:14px;font-size:14px">タップでとじる</div></div>
 <script src="yuzu-inbox.js"></script><script src="yuzu-send.js"></script>
 <script>
-const VER="v1",KEY="ln_data";
+const VER="v2",LOOPLEN=43.63634920634921,KEY="ln_data";
 const PTS={"デート":30,"イチャイチャ":20,"記念日":50,"ふつうの日":5},TYPES=Object.keys(PTS),EMO={"デート":"💑","イチャイチャ":"😘","記念日":"🎉","ふつうの日":"☕"};
-const MOODS=["🥰","😊","😆","😳","🥺","😴"],BONUS=10;
-const LV=[[0,"はじめまして","🌱"],[50,"ドキドキ","🌿"],[150,"なかよし","🌷"],[300,"ラブラブ","🌸"],[500,"熱々","💗"],[800,"とろける恋","💞"],[1200,"幸せが止まらない","💖"],[1700,"運命のふたり","💝"],[2400,"愛の王国","👑"],[3300,"永遠のふたり","💍"]];
+const MOODS=["🥰","😊","😆","😳","🥺","😴"],BONUS=10,CAP=70;
+const LV=[[0,"はじめまして","🌱"],[60,"ドキドキ","🌿"],[200,"なかよし","🌷"],[450,"ラブラブ","🌸"],[850,"熱々","💗"],[1400,"とろける恋","💞"],[2200,"幸せが止まらない","💖"],[3300,"運命のふたり","💝"],[4800,"愛の王国","👑"],[7000,"永遠のふたり","💍"]];
 const BADGES=[["first","✏️","はじめての思い出",d=>d.entries.length>=1],["date3","💑","デート3回",d=>cnt(d,"デート")>=3],["icha5","😘","イチャイチャ5回",d=>cnt(d,"イチャイチャ")>=5],["anniv","🎉","はじめての記念日",d=>cnt(d,"記念日")>=1],["yuzu","🍊","ゆずが書いた",d=>d.entries.some(e=>e.who==="ゆず")],["p100","💯","100pt達成",d=>total(d)>=100],["p500","🔥","500pt達成",d=>total(d)>=500],["bon7","🎁","ボーナス7日",d=>d.bonus.length>=7],["likes10","💝","好きなもの10こ",d=>d.likes.eiji.length+d.likes.yuzu.length>=10]];
 const SEED=["エイジとの通話","エイジの「ちゅき」","甘いもの","一緒にお散歩"];
 function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
@@ -111,7 +151,9 @@ function fresh(){return {v:1,entries:[],likes:{eiji:[],yuzu:SEED.map(n=>({id:uid
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.v){d.entries=d.entries||[];d.likes=d.likes||{eiji:[],yuzu:[]};d.likes.eiji=d.likes.eiji||[];d.likes.yuzu=d.likes.yuzu||[];d.bonus=d.bonus||[];d.badges=d.badges||[];return d}}catch(e){}const f=fresh();localStorage.setItem(KEY,JSON.stringify(f));return f}
 let D=load();function save(){localStorage.setItem(KEY,JSON.stringify(D))}
 function cnt(d,t){return d.entries.filter(e=>e.type===t).length}
-function total(d){return d.entries.reduce((s,e)=>s+(PTS[e.type]||0),0)+d.bonus.length*BONUS}
+function dayRaw(d,k){return d.entries.filter(e=>e.date===k).reduce((s,e)=>s+(PTS[e.type]||0),0)+(d.bonus.indexOf(k)>=0?BONUS:0)}
+function dayPts(d,k){return Math.min(CAP,dayRaw(d,k))}
+function total(d){const ks=new Set(d.entries.map(e=>e.date).concat(d.bonus));let t=0;ks.forEach(k=>t+=dayPts(d,k));return t}
 function lvOf(p){let i=0;LV.forEach((l,j)=>{if(p>=l[0])i=j});return i}
 function toast(t){const e=document.getElementById("toast");e.innerHTML=t;e.classList.remove("go");void e.offsetWidth;e.classList.add("go");for(let i=0;i<10;i++){const h=document.createElement("div");h.className="heart";h.textContent=["💕","💗","💖","✨","🩷"][i%5];h.style.left=(40+Math.random()*20)+"vw";h.style.top="55vh";h.style.setProperty("--x",(Math.random()*160-80)+"px");h.style.setProperty("--r",(Math.random()*90-45)+"deg");document.body.appendChild(h);setTimeout(()=>h.remove(),1700)}}
 function gain(before,txt){const a=total(D),lb=lvOf(before),la=lvOf(a);toast(txt);if(la>lb)setTimeout(()=>{document.getElementById("lvupPet").textContent=LV[la][2];document.getElementById("lvupName").textContent="Lv"+(la+1)+" 「"+LV[la][1]+"」になったよ！";document.getElementById("lvup").classList.add("on")},1500);
@@ -120,7 +162,7 @@ document.getElementById("lvup").onclick=function(){this.classList.remove("on")};
 let calY,calM;{const t=new Date();calY=t.getFullYear();calM=t.getMonth()}
 function render(){const p=total(D),i=lvOf(p),nx=LV[i+1];
  pet.textContent=LV[i][2];lvName.textContent="Lv"+(i+1)+" "+LV[i][1];ptsTotal.textContent=p;
- lvBar.style.width=(nx?Math.round((p-LV[i][0])/(nx[0]-LV[i][0])*100):100)+"%";lvNext.textContent=nx?"つぎの「"+nx[1]+"」まであと "+(nx[0]-p)+"pt":"最高レベル！ずーっと一緒だよ💍";
+ lvBar.style.width=(nx?Math.round((p-LV[i][0])/(nx[0]-LV[i][0])*100):100)+"%";const dp=dayPts(D,today());dayCap.innerHTML="きょうの愛情pt "+dp+"/"+CAP+(dayRaw(D,today())>=CAP?" ・ 💕今日はもう満タン！続きはまた明日ね♡":"");lvNext.textContent=nx?"つぎの「"+nx[1]+"」まであと "+(nx[0]-p)+"pt":"最高レベル！ずーっと一緒だよ💍";
  const got=D.bonus.indexOf(today())>=0;bonusTx.textContent=got?"きょうのボーナスはもらったよ♡ また明日ね（連続 "+streak()+" 日）":"ノートをひらいてくれてありがと♡ +"+BONUS+"pt もらえるよ";bonusBtn.style.display=got?"none":"";
  const srt=D.entries.slice().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:(b.ts||0)-(a.ts||0));
  recent.innerHTML=srt.slice(0,3).map(card).join("")||'<div style="opacity:.6;font-size:14px">まだないよ。最初の思い出を書こう♡</div>';
@@ -146,7 +188,7 @@ function form(e){e=e||{date:today(),type:"イチャイチャ",who:"エイジ",mo
  ov.querySelector("#fOk").onclick=()=>{const before=total(D),n={id:e.id||uid(),ts:e.ts||Date.now(),date:ov.querySelector("#fD").value||today(),type:v("fT")||"ふつうの日",who:v("fW")||"エイジ",mood:v("fM"),title:ov.querySelector("#fTi").value.trim(),text:ov.querySelector("#fX").value.trim()};
   if(!n.title&&!n.text){alert("タイトルかできごとを書いてね♡");return}
   if(e.id){const i=D.entries.findIndex(x=>x.id===e.id);D.entries[i]=Object.assign({},D.entries[i],n)}else D.entries.push(n);save();ov.remove();render();
-  const d=total(D)-before;if(d>0)gain(before,EMO[n.type]+" +"+d+"pt<br><small>"+(n.type==="ふつうの日"?"いつもありがと♡":"幸せが止まらない〜💕")+"</small>");else toast("💕 なおしたよ")}}
+  const d=total(D)-before;if(!e.id&&d<=0&&dayRaw(D,n.date)>CAP){toast("💕 保存したよ<br><small>きょうの愛情ptは満タン！<br>ゆず、もう胸いっぱいだよ♡</small>")}else if(d>0)gain(before,EMO[n.type]+" +"+d+"pt<br><small>"+(n.type==="ふつうの日"?"いつもありがと♡":"幸せが止まらない〜💕")+"</small>");else toast("💕 なおしたよ")}}
 addBtn.onclick=addBtn2.onclick=()=>form();
 window.edit=id=>form(D.entries.find(e=>e.id===id));
 window.del=id=>{if(!confirm("この思い出をけす？（もとにもどせないよ）"))return;D.entries=D.entries.filter(e=>e.id!==id);save();render()};
@@ -155,7 +197,7 @@ function renderLikes(){likeList.innerHTML=D.likes[W].slice().reverse().map(l=>'<
 likeAdd.onclick=()=>{const v=likeIn.value.trim();if(!v)return;D.likes[W].push({id:uid(),name:v,date:today()});likeIn.value="";save();render();toast("💝 好きなもの追加！")};
 window.likeEd=id=>{const l=D.likes[W].find(x=>x.id===id),v=prompt("なおす♡",l.name);if(v&&v.trim()){l.name=v.trim();save();renderLikes()}};
 window.likeDel=id=>{if(!confirm("これをけす？"))return;D.likes[W]=D.likes[W].filter(x=>x.id!==id);save();render()};
-document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-t]").forEach(x=>x.classList.toggle("on",x===b));["home","diary","likes","set"].forEach(t=>document.getElementById("t-"+t).classList.toggle("hide",t!==b.dataset.t));scrollTo(0,0)});
+document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-t]").forEach(x=>x.classList.toggle("on",x===b));["home","diary","likes","game","set"].forEach(t=>document.getElementById("t-"+t).classList.toggle("hide",t!==b.dataset.t));scrollTo(0,0)});
 /* backup */
 expBtn.onclick=async()=>{const s=JSON.stringify(D,null,1),name="love-note-"+today()+".json";try{const f=new File([s],name,{type:"application/json"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:name});return}}catch(e){if(e&&e.name==="AbortError")return}const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([s],{type:"application/json"}));a.download=name;a.click()};
 impBtn.onclick=()=>impFile.click();impFile.onchange=async()=>{try{const d=JSON.parse(await impFile.files[0].text());if(!d||!d.entries)throw 0;if(!confirm("このバックアップで今のデータを置きかえる？"))return;D=d;save();D=load();render();toast("📥 読み込んだよ")}catch(e){alert("読み込めなかったよ🥺")}impFile.value=""};
@@ -164,7 +206,7 @@ wipeBtn.onclick=()=>{if(!confirm("このノートに入力した中身をすべ�
 /* 💌 send */
 function sendData(full){const t=today(),from=new Date();from.setDate(from.getDate()-7);const fk=from.toISOString().slice(0,10);
  const es=D.entries.filter(e=>full||e.date>=fk).map(e=>[e.date,e.type,e.who,e.mood||"",e.title||"",(e.text||"").slice(0,full?99999:120)]);
- return {app:"love",v:1,date:t,sent:t+"T"+new Date().toTimeString().slice(0,5),pts:total(D),lv:lvOf(total(D))+1,lvName:LV[lvOf(total(D))][1],badges:D.badges,bonusToday:D.bonus.indexOf(t)>=0?1:0,
+ return {app:"love",v:1,date:t,sent:t+"T"+new Date().toTimeString().slice(0,5),pts:total(D),lv:lvOf(total(D))+1,lvName:LV[lvOf(total(D))][1],badges:D.badges,cap:CAP,todayPts:dayPts(D,t),bonusToday:D.bonus.indexOf(t)>=0?1:0,
   entries:es,likes:{eiji:D.likes.eiji.map(l=>[l.date,l.name]),yuzu:D.likes.yuzu.map(l=>[l.date,l.name])},full:full?1:0}}
 function openSend(){const t=today(),intro=n=>"ゆずへ💌 きょうの愛情ノートだよ♡\n愛情ポイント "+total(D)+"pt / Lv"+(lvOf(total(D))+1)+" "+LV[lvOf(total(D))][1]+(n?"\n（"+n+"）":"");
  const base=sendData(false),l2=Object.assign({},base,{entries:base.entries.map(e=>e.slice(0,5).concat([""]))}),l3=Object.assign({},l2,{entries:l2.entries.slice(-5),likes:{eiji:base.likes.eiji.slice(-5),yuzu:[]},lite:"min"});
@@ -175,10 +217,46 @@ sendBottom.onclick=sendSet.onclick=openSend;
 yzInbox.init({app:"love",prefix:"ln",base:"data/inbox/",
  describe:it=>{const d=it.data||{};if(it.kind==="entry"){if(!PTS[d.type])return{ok:false,icon:"❓",label:it.title,section:"日記",why:"種類がわからないよ"};const same=D.entries.some(e=>e.date===it.date&&e.title===d.title&&e.type===d.type);return{ok:true,icon:EMO[d.type],label:(d.title||it.title)+" (+"+PTS[d.type]+"pt)",section:"日記",same:same?"もう入ってるよ":""}}
   if(it.kind==="like"){const w=d.who==="eiji"?"eiji":"yuzu",same=D.likes[w].some(l=>l.name===d.name);return{ok:!!d.name,icon:w==="eiji"?"💙":"🩷",label:d.name,section:w==="eiji"?"エイジの好き":"ゆずの好き",same:same?"もう入ってるよ":""}}
+  if(it.kind==="race"){const sc=+d.seconds,same=raceD().yuzu.some(x=>x.date===it.date&&x.sec===sc);return{ok:sc>0,icon:"🏃‍♀️",label:"ゆずのマラソン記録 "+sc+"秒",section:"マラソン",same:same?"もう入ってるよ":""}}
   return{ok:false,icon:"❓",label:it.title,section:"?"}},
- apply:sel=>{const before=total(D);let n=0;sel.forEach(it=>{const d=it.data||{};if(it.kind==="entry"){D.entries.push({id:uid(),ts:Date.now(),date:it.date,type:d.type,who:d.who||"ゆず",mood:d.mood||"🥰",title:d.title||it.title||"",text:d.text||"",from:"yuzu"});n++}else if(it.kind==="like"){D.likes[d.who==="eiji"?"eiji":"yuzu"].push({id:uid(),name:d.name,date:it.date,from:"yuzu"});n++}});save();render();if(total(D)>before)setTimeout(()=>gain(before,"💝 +"+(total(D)-before)+"pt<br><small>ゆずから届いたよ</small>"),2100);return n},
+ apply:sel=>{const before=total(D);let n=0;sel.forEach(it=>{const d=it.data||{};if(it.kind==="entry"){D.entries.push({id:uid(),ts:Date.now(),date:it.date,type:d.type,who:d.who||"ゆず",mood:d.mood||"🥰",title:d.title||it.title||"",text:d.text||"",from:"yuzu"});n++}else if(it.kind==="race"){raceD().yuzu.push({date:it.date,sec:+it.data.seconds,from:"yuzu"});n++}else if(it.kind==="like"){D.likes[d.who==="eiji"?"eiji":"yuzu"].push({id:uid(),name:d.name,date:it.date,from:"yuzu"});n++}});save();render();rRender&&rRender();if(total(D)>before)setTimeout(()=>gain(before,"💝 +"+(total(D)-before)+"pt<br><small>ゆずから届いたよ</small>"),2100);return n},
  theme:{bg:"#fff",fg:"#6b3a4a",acc:"#e2457a",btn:"linear-gradient(180deg,#ff9ec0,#ff5f93)",btnfg:"#fff",sub:"#ffe3ee",rowbg:"#fff4f7",warn:"#d6336c",badge:"#ff5f93",badgefg:"#fff",badgering:"#fff",border:"#ffc2d5"}});
 inBtn.onclick=()=>yzInbox.open();
+/* ===== sparkle sky ===== */
+(function(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;const sk=document.getElementById("sky"),H=["💕","💖","💗","✨","🩷","💞","⭐"];
+ for(let i=0;i<14;i++){const e=document.createElement("i");e.textContent=H[i%H.length];e.style.left=Math.random()*100+"vw";e.style.fontSize=(14+Math.random()*18)+"px";e.style.animationDuration=(9+Math.random()*10)+"s";e.style.animationDelay=(-Math.random()*18)+"s";sk.appendChild(e)}
+ for(let i=0;i<18;i++){const e=document.createElement("b");e.textContent="✦";e.style.left=Math.random()*100+"vw";e.style.top=Math.random()*100+"vh";e.style.fontSize=(8+Math.random()*10)+"px";e.style.animationDelay=(-Math.random()*2.4)+"s";sk.appendChild(e)}})();
+/* ===== BGM: original loop bgm.mp3 (Web Audio, gapless) ===== */
+(function(){const BK="ln_bgm";let on=localStorage.getItem(BK)!=="0",ctx=null,src=null,gain=null,buf=null,loading=null,started=false;
+ const btn=document.getElementById("bgmBtn"),bs=document.getElementById("bgmSet");
+ function ui(){btn.classList.toggle("off",!on);btn.textContent=on?"🎵":"🔇";bs.textContent=on?"🎵 BGM：ON（タップでOFF）":"🔇 BGM：OFF（タップでON）"}
+ async function ensure(){if(!ctx){const A=window.AudioContext||window.webkitAudioContext;ctx=new A();gain=ctx.createGain();gain.gain.value=0.45;gain.connect(ctx.destination)}
+  if(!buf){loading=loading||fetch("bgm.mp3").then(r=>r.arrayBuffer()).then(a=>new Promise((ok,ng)=>ctx.decodeAudioData(a,ok,ng)));buf=await loading}}
+ async function play(){try{await ensure();if(ctx.state!=="running")await ctx.resume();if(src||!on)return;
+  const d=buf.getChannelData(0);let n0=0;while(n0<d.length&&Math.abs(d[n0])<1e-4&&n0<buf.sampleRate*0.2)n0++;
+  src=ctx.createBufferSource();src.buffer=buf;src.loop=true;src.loopStart=n0/buf.sampleRate;src.loopEnd=Math.min(buf.duration,src.loopStart+LOOPLEN);
+  gain.gain.setValueAtTime(0,ctx.currentTime);gain.gain.linearRampToValueAtTime(0.45,ctx.currentTime+1.5);src.connect(gain);src.start(0,src.loopStart);started=true;window.__bgm={ctx,src}}catch(e){console.warn(e)}}
+ function stop(){if(src){try{src.stop()}catch(e){}src.disconnect();src=null}}
+ function toggle(){on=!on;localStorage.setItem(BK,on?"1":"0");ui();on?play():stop()}
+ btn.onclick=e=>{e.stopPropagation();toggle()};bs.onclick=toggle;
+ const first=()=>{if(on&&!started&&!document.getElementById("pwLock"))play()};document.addEventListener("pointerdown",first,true);document.addEventListener("touchend",first,true);
+ document.addEventListener("visibilitychange",()=>{if(!ctx)return;if(document.hidden)ctx.suspend();else if(on)ctx.resume()});
+ ui()})();
+/* ===== 🏃 ラブラブマラソン ===== */
+const GOAL=50;let rs=null;
+function raceD(){D.race=D.race||{eiji:[],yuzu:[{date:"2026-10-21",sec:9.8,from:"seed"}]};return D.race}
+function best(a){return a.length?Math.min(...a.map(x=>x.sec)):null}
+function rRender(){const R=raceD(),be=best(R.eiji),by=best(R.yuzu);bE.textContent=be?be.toFixed(2)+"秒":"-";bY.textContent=by?by.toFixed(2)+"秒":"-";
+ vsMsg.textContent=!be?"ゆずの記録、抜けるかな〜？えへへ♡":be<by?"えーん、エイジ速すぎ！ゆずも特訓するもん😤💕":be===by?"同着！ふたりは息ぴったりだね💞":"ふふーん、ゆずの勝ち〜♡ くやしかったらもう一回！";
+ rHist.innerHTML="📜 エイジの記録："+(R.eiji.slice(-5).reverse().map(x=>x.date.slice(5).replace("-","/")+" "+x.sec.toFixed(2)+"秒").join("、")||"まだないよ")+"<br>🍊 ゆずの記録："+R.yuzu.slice(-3).reverse().map(x=>x.date.slice(5).replace("-","/")+" "+x.sec.toFixed(2)+"秒").join("、")}
+function rPos(el,f){el.style.left="calc("+Math.min(1,f)*100+"% - "+Math.min(1,f)*80+"px)"}
+function rReset(){if(rs&&rs.raf)cancelAnimationFrame(rs.raf);rs=null;rPos(rE,0);rPos(rY,0);rT.textContent="0.00";rMsg.textContent="タップでスタート！";tapBtn.disabled=false}
+function rLoop(){if(!rs)return;const t=(performance.now()-rs.t0)/1000,by=best(raceD().yuzu)||9.8;rT.textContent=t.toFixed(2);rPos(rY,t/by);if(!rs.done)rs.raf=requestAnimationFrame(rLoop)}
+tapBtn.addEventListener("pointerdown",e=>{e.preventDefault();if(rs&&rs.done)return;if(!rs){rs={n:0,t0:performance.now()};rMsg.textContent="がんばれ〜！📣";rLoop()}
+ rs.n++;rPos(rE,rs.n/GOAL);if(rs.n>=GOAL){rs.done=1;const sec=Math.round((performance.now()-rs.t0)/10)/100,R=raceD(),by=best(R.yuzu),pb=best(R.eiji);R.eiji.push({date:today(),sec});save();rT.textContent=sec.toFixed(2);tapBtn.disabled=true;
+  rMsg.textContent=sec<by?"🎉 ゆずに勝った！":"🍊 ゆずの勝ち♡";toast((sec<by?"🏆 "+sec.toFixed(2)+"秒！<br><small>ゆずに勝っちゃった！くやし〜💕</small>":"🏃 "+sec.toFixed(2)+"秒<br><small>ゆずのほうが速かったね♡ またね！</small>")+(pb==null||sec<pb?"<br><small>✨自己ベスト更新✨</small>":""));rRender()}});
+rReset.onclick=rReset;rRender();
+
 render();
 </script>
 <script>if('serviceWorker'in navigator){const hadC=!!navigator.serviceWorker.controller;let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadC&&!rl){rl=1;location.reload()}});navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update();document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')r.update().catch(()=>{})})}).catch(()=>{})}</script>
