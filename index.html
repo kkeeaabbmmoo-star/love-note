@@ -93,6 +93,8 @@ section,.tabs,h1,.sub,.foot,.hero{position:relative;z-index:1}
 .pop{position:absolute;left:50%;bottom:-70px;transform:translateX(-50%);font-size:46px;transition:bottom .15s ease-out;cursor:pointer;user-select:none;-webkit-user-select:none;width:70px;height:70px;display:flex;align-items:center;justify-content:center}
 .pop.up{bottom:10px}.pop.hit{animation:hitp .35s forwards}@keyframes hitp{to{transform:translateX(-50%) scale(1.6);opacity:0}}
 #mMsg{min-height:22px;text-align:center;font-weight:800;color:#d6336c}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}.mc{height:72px;border-radius:14px;font-size:34px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ff9ec0,#c77dff);color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;transition:transform .2s;box-shadow:0 3px 0 #e2457a}.mc.op,.mc.ok{background:#fff;color:inherit}.mc.ok{opacity:.55;box-shadow:0 0 10px #ffd36e}
+.ntg{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:10px 0}.nt{height:58px;border-radius:12px;font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;background:#fff;border:2px solid #ffb3cb;color:#d6336c;touch-action:manipulation;user-select:none;-webkit-user-select:none}.nt.dn{background:#ffe3ee;color:#ffb3cb;border-color:#ffe3ee}.nt.ng{animation:ng .25s}@keyframes ng{50%{background:#ff9ec0}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}#sky{display:none}}
 
 </style></head><body>
@@ -155,6 +157,12 @@ document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",functi
  <div class="card"><h2>💖 ハートキャッチ</h2><div style="font-size:13.5px">30秒で出てくる💖とゆずをタップしてね！ 1日1回 +5pt もらえるよ♡（勝ち負けなし）</div>
  <div style="display:flex;justify-content:space-between;font-weight:800;margin-top:6px"><span>⏱ <span id="mT">30</span>秒</span><span>💖 <span id="mS">0</span></span><span>🏅 <span id="mB">0</span></span></div>
  <div class="mole" id="mole"></div><div id="mMsg"></div><button class="pri" id="mGo">💖 スタート</button></div>
+ <div class="card"><h2>🃏 神経衰弱タイムアタック</h2><div style="font-size:13.5px">16まい（8ペア）を全部そろえるまでのタイムをきそうよ♡ ミスが少ないほどえらい！</div>
+ <div style="display:flex;justify-content:space-between;font-weight:800;margin-top:6px"><span>⏱ <span id="gmT">0.00</span>秒</span><span>❌ <span id="gmM">0</span></span><span>🏅 <span id="gmB">-</span></span></div>
+ <div class="mem" id="gmG"></div><div id="gmMsg" style="min-height:22px;text-align:center;font-weight:800;color:#d6336c"></div><button class="pri" id="gmGo">🃏 スタート</button></div>
+ <div class="card"><h2>🔢 数字タッチ</h2><div style="font-size:13.5px">1から25まで、順番にできるだけ早くタッチしてね！</div>
+ <div style="display:flex;justify-content:space-between;font-weight:800;margin-top:6px"><span>⏱ <span id="gnT">0.00</span>秒</span><span>👉 つぎ <span id="gnN">1</span></span><span>🏅 <span id="gnB">-</span></span></div>
+ <div class="ntg" id="gnG"></div><div id="gnMsg" style="min-height:22px;text-align:center;font-weight:800;color:#d6336c"></div><button class="pri" id="gnGo">🔢 スタート</button></div>
  <div class="card"><h2>🏆 エイジ vs ゆず</h2><div class="vs"><div>🙋‍♂️ エイジ<div class="big" id="bE">-</div></div><div style="font-size:26px">⚡</div><div>🍊 ゆず<div class="big" id="bY">-</div></div></div><div id="vsMsg" style="text-align:center;margin-top:8px;font-weight:800;color:#d6336c"></div><div id="rHist" style="font-size:13px;margin-top:8px"></div></div>
 </section>
 <section id="t-set" class="hide">
@@ -298,6 +306,25 @@ const MSG=["ちゅき♡","つかまっちゃった〜😳","エイジの指、�
  mGo.onclick=()=>{if(run)return;run={s:0,t:30};mS.textContent=0;mT.textContent=30;mMsg.textContent="がんばって〜！";mGo.disabled=true;mGo.textContent="キャッチ中…";
   run.iv=setInterval(()=>{run.t--;mT.textContent=run.t;if(run.t<=0)end()},1000);spawn()};
  window.__mole={end:()=>{run.t=0;end()}}})();
+/* ===== 🃏 神経衰弱 / 🔢 数字タッチ (own key ln_minigames only) ===== */
+(function(){const MK="ln_minigames";let G;try{G=JSON.parse(localStorage.getItem(MK))||{}}catch(e){G={}}G.mem=G.mem||{best:0,hist:[]};G.num=G.num||{best:0,hist:[]};
+ function sv(){try{localStorage.setItem(MK,JSON.stringify(G))}catch(e){}}const $=id=>document.getElementById(id),f=x=>x?x.toFixed(2)+"秒":"-";
+ function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
+ function rec(o,sec,extra){const pb=!o.best||sec<o.best;if(pb)o.best=sec;o.hist.push(Object.assign({date:today(),sec},extra||{}));o.hist=o.hist.slice(-30);sv();return pb}
+ $("gmB").textContent=f(G.mem.best);$("gnB").textContent=f(G.num.best);
+ const EM=["💖","🍊","💍","🌸","🧸","🍓","⭐","🎀"];let m=null;
+ function mTick(){if(!m||m.done)return;$("gmT").textContent=((performance.now()-m.t0)/1000).toFixed(2);m.raf=requestAnimationFrame(mTick)}
+ $("gmGo").onclick=()=>{if(m&&m.raf)cancelAnimationFrame(m.raf);const deck=shuf(EM.concat(EM)),g=$("gmG");g.innerHTML="";m={t0:0,miss:0,got:0,open:[],lock:0};$("gmM").textContent=0;$("gmT").textContent="0.00";$("gmMsg").textContent="めくったらスタート！";$("gmGo").textContent="🔄 やりなおし";
+  deck.forEach(e=>{const c=document.createElement("div");c.className="mc";c.textContent=e;c.addEventListener("pointerdown",ev=>{ev.preventDefault();if(!m||m.done||m.lock||c.classList.contains("op")||c.classList.contains("ok"))return;
+   if(!m.t0){m.t0=performance.now();$("gmMsg").textContent="がんばって〜♡";mTick()}c.classList.add("op");m.open.push(c);if(m.open.length<2)return;
+   const[a,b]=m.open;m.open=[];if(a.textContent===b.textContent){a.classList.replace("op","ok");b.classList.replace("op","ok");if(++m.got===8){m.done=1;const sec=Math.round((performance.now()-m.t0)/10)/100;$("gmT").textContent=sec.toFixed(2);const pb=rec(G.mem,sec,{miss:m.miss});$("gmB").textContent=f(G.mem.best);$("gmMsg").textContent=(pb?"✨自己ベスト！ ":"クリア！ ")+sec.toFixed(2)+"秒・ミス"+m.miss+"回";toast("🃏 "+sec.toFixed(2)+"秒"+(pb?"<br><small>ベスト更新！</small>":""))}}
+   else{m.miss++;$("gmM").textContent=m.miss;m.lock=1;setTimeout(()=>{a.classList.remove("op");b.classList.remove("op");if(m)m.lock=0},650)}});g.appendChild(c)})};
+ let n=null;function nTick(){if(!n||n.done)return;$("gnT").textContent=((performance.now()-n.t0)/1000).toFixed(2);n.raf=requestAnimationFrame(nTick)}
+ $("gnGo").onclick=()=>{if(n&&n.raf)cancelAnimationFrame(n.raf);const g=$("gnG");g.innerHTML="";n={t0:0,next:1};$("gnN").textContent=1;$("gnT").textContent="0.00";$("gnMsg").textContent="1をタッチでスタート！";$("gnGo").textContent="🔄 やりなおし";
+  shuf([...Array(25)].map((_,i)=>i+1)).forEach(k=>{const c=document.createElement("div");c.className="nt";c.textContent=k;c.addEventListener("pointerdown",ev=>{ev.preventDefault();if(!n||n.done||c.classList.contains("dn"))return;
+   if(k!==n.next){c.classList.remove("ng");void c.offsetWidth;c.classList.add("ng");return}if(k===1){n.t0=performance.now();$("gnMsg").textContent="その調子♡";nTick()}c.classList.add("dn");n.next++;$("gnN").textContent=Math.min(n.next,25);
+   if(k===25){n.done=1;const sec=Math.round((performance.now()-n.t0)/10)/100;$("gnT").textContent=sec.toFixed(2);const pb=rec(G.num,sec);$("gnB").textContent=f(G.num.best);$("gnMsg").textContent=(pb?"✨自己ベスト！ ":"クリア！ ")+sec.toFixed(2)+"秒";toast("🔢 "+sec.toFixed(2)+"秒"+(pb?"<br><small>ベスト更新！</small>":""))}});g.appendChild(c)})};
+})();
 couple(false);
 
 
@@ -305,5 +332,5 @@ render();
 </script>
 <script>if('serviceWorker'in navigator){const hadC=!!navigator.serviceWorker.controller;let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadC&&!rl){rl=1;location.reload()}});navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update();document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')r.update().catch(()=>{})})}).catch(()=>{})}</script>
 <script>window.YM_CFG={onKey:"ln_bgm",trackKey:"ln_music_track",defTrack:"love",tracks:{orgel:{len:60}},locked:()=>!!document.getElementById("pwLock")};</script><script src="yuzu-music.js"></script><script>document.getElementById("ymCard").innerHTML=YuzuMusic.cardHTML();YuzuMusic.ui()</script>
-<script>window.GY_CFG={ver:"v8",key:"ln_grok_yuzu",theme:{acc:"#e2457a",btn:"linear-gradient(180deg,#ff9ec0,#ff5f93)"}};</script><script src="grok-yuzu.js?v=gy3"></script>
+<script>window.GY_CFG={ver:"v9",key:"ln_grok_yuzu",theme:{acc:"#e2457a",btn:"linear-gradient(180deg,#ff9ec0,#ff5f93)"}};</script><script src="grok-yuzu.js?v=gy3"></script>
 </body></html>
