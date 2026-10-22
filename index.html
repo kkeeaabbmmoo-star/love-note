@@ -241,7 +241,7 @@ function sendData(full){const t=today(),from=new Date();from.setDate(from.getDat
   entries:es,likes:{eiji:D.likes.eiji.map(l=>[l.date,l.name]),yuzu:D.likes.yuzu.map(l=>[l.date,l.name])},full:full?1:0}}
 function openSend(){const t=today(),intro=n=>"ゆずへ💌 きょうの愛情ノートだよ♡\n愛情ポイント "+total(D)+"pt / Lv"+(lvOf(total(D))+1)+" "+LV[lvOf(total(D))][1]+(n?"\n（"+n+"）":"");
  const base=sendData(false),l2=Object.assign({},base,{entries:base.entries.map(e=>e.slice(0,5).concat([""]))}),l3=Object.assign({},l2,{entries:l2.entries.slice(-5),likes:{eiji:base.likes.eiji.slice(-5),yuzu:[]},lite:"min"});
- return window.__lastSend=yuzuSend({subject:"【ゆずに送る】愛情ノート "+t,intro:intro,levels:[{data:base,note:""},{data:l2,note:"本文は短くしたよ"},{data:l3,note:"最近5件だけ"}],full:sendData(true),fullNote:"ぜんぶのデータ",
+ return window.__lastSend=yuzuSend({subject:"ゆずとゆいへ 愛情ノート "+t,intro:intro,levels:[{data:base,note:""},{data:l2,note:"本文は短くしたよ"},{data:l3,note:"最近5件だけ"}],full:sendData(true),fullNote:"ぜんぶのデータ",
   theme:{bg:"#fff",fg:"#6b3a4a",acc:"#e2457a",btn:"linear-gradient(180deg,#ff9ec0,#ff5f93)",btnfg:"#fff",sub:"#ffe3ee"}})}
 sendBottom.onclick=sendSet.onclick=openSend;
 /* 💝 inbox: kinds entry{type,who?,mood?,title,text} / like{who:eiji|yuzu,name} — append only */
