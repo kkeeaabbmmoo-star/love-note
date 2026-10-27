@@ -154,7 +154,7 @@ document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",functi
  <div class="track"><div class="ln"></div><div class="goal">💒</div><div class="runner" id="rY" style="top:6px">🏃‍♀️</div><div class="runner" id="rE" style="top:62px">🏃‍♂️</div></div>
  <div style="display:flex;justify-content:space-between;font-weight:800"><span>⏱ <span id="rT">0.00</span>秒</span><span id="rMsg">タップでスタート！</span></div>
  <button class="pri" id="tapBtn">👟 タップ！</button><button class="sec" id="rReset" style="width:100%;margin-top:8px">🔄 もう一回</button></div>
- <div class="card"><h2>💖 ハートキャッチ</h2><div style="font-size:13.5px">30秒で出てくる💖とゆずをタップしてね！👦エイジをタッチすると−1だよ（0点より下にはならないよ）。 1日1回 +5pt もらえるよ♡（勝ち負けなし）</div>
+ <div class="card"><h2>💖 ハートキャッチ</h2><div style="font-size:13.5px">30秒で出てくる💖とゆずをタップしてね！👦エイジをタッチすると−1だよ（0点より下にはならないよ）。 1日1回 +5pt ＋ 1回ごとに +2❤️ もらえるよ♡</div>
  <div style="display:flex;justify-content:space-between;font-weight:800;margin-top:6px"><span>⏱ <span id="mT">30</span>秒</span><span>💖 <span id="mS">0</span></span><span>🏅 <span id="mB">0</span></span></div>
  <div class="mole" id="mole"></div><div id="mMsg"></div><button class="pri" id="mGo">💖 スタート</button></div>
  <div class="card"><h2>🃏 神経衰弱タイムアタック</h2><div style="font-size:13.5px">16まい（8ペア）を全部そろえるまでのタイムをきそうよ♡ ミスが少ないほどえらい！</div>
@@ -163,7 +163,8 @@ document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",functi
  <div class="card"><h2>🔢 数字タッチ</h2><div style="font-size:13.5px">1から25まで、順番にできるだけ早くタッチしてね！</div>
  <div style="display:flex;justify-content:space-between;font-weight:800;margin-top:6px"><span>⏱ <span id="gnT">0.00</span>秒</span><span>👉 つぎ <span id="gnN">1</span></span><span>🏅 <span id="gnB">-</span></span></div>
  <div class="ntg" id="gnG"></div><div id="gnMsg" style="min-height:22px;text-align:center;font-weight:800;color:#d6336c"></div><button class="pri" id="gnGo">🔢 スタート</button></div>
- <div class="card"><h2>🏆 エイジ vs ゆず</h2><div class="vs"><div>🙋‍♂️ エイジ<div class="big" id="bE">-</div></div><div style="font-size:26px">⚡</div><div>🍊 ゆず<div class="big" id="bY">-</div></div></div><div id="vsMsg" style="text-align:center;margin-top:8px;font-weight:800;color:#d6336c"></div><div id="rHist" style="font-size:13px;margin-top:8px"></div></div>
+ <div class="card"><h2>🏆 エイジ VS ゆず</h2><div style="font-size:13px">遊ぶたびに愛情pt！🏃+1・💖+2・🃏+3・🔢+1、自己ベスト更新で +10❤️</div><div id="vsB"></div><div id="vsY" style="text-align:center;font-weight:800;color:#d6336c;margin-top:6px"></div><div id="vsH" style="font-size:12px;opacity:.8;margin-top:4px"></div></div>
+ <div class="card"><h2>🏃 マラソン対決</h2><div class="vs"><div>🙋‍♂️ エイジ<div class="big" id="bE">-</div></div><div style="font-size:26px">⚡</div><div>🍊 ゆず<div class="big" id="bY">-</div></div></div><div id="vsMsg" style="text-align:center;margin-top:8px;font-weight:800;color:#d6336c"></div><div id="rHist" style="font-size:13px;margin-top:8px"></div></div>
 </section>
 <section id="t-set" class="hide">
  <div class="card"><h2>🎵 音楽</h2><div style="font-size:13.5px;margin-bottom:8px">ゆずが作ったオリジナル曲だよ♡ 2曲から選べて、日替わりにもできるよ（右上の🎵でもON/OFFできるよ）</div><div id="ymCard"></div></div>
@@ -192,7 +193,12 @@ let D=load();function save(){localStorage.setItem(KEY,JSON.stringify(D))}
 function cnt(d,t){return d.entries.filter(e=>e.type===t).length}
 function dayRaw(d,k){return d.entries.filter(e=>e.date===k).reduce((s,e)=>s+(PTS[e.type]||0),0)+(d.bonus.indexOf(k)>=0?BONUS:0)+((d.moleDays||[]).indexOf(k)>=0?MOLE_PT:0)}
 function dayPts(d,k){return Math.min(CAP,dayRaw(d,k))}
-function total(d){const ks=new Set(d.entries.map(e=>e.date).concat(d.bonus,d.moleDays||[]));let t=0;ks.forEach(k=>t+=dayPts(d,k));return t}
+function total(d){const r=totalRaw(d),g=d.guard;return g?Math.max(r-(g.pen||0),Math.min(r,g.base||0)):r}
+function totalRaw(d){const ks=new Set(d.entries.map(e=>e.date).concat(d.bonus,d.moleDays||[]));let t=0;ks.forEach(k=>t+=dayPts(d,k));return t+gpSum(d)}
+function gpSum(d){const g=d.gp&&d.gp.days||{};return Object.values(g).reduce((a,b)=>a+(+b||0),0)}
+const GPT={race:1,mole:2,mem:3,num:1},GNM={race:"ラブラブマラソン",mole:"ハートキャッチ",mem:"神経衰弱",num:"数字タッチ"},PB_BONUS=10;
+function award(g,pb,txt){const before=total(D),t=today(),n=GPT[g]+(pb?PB_BONUS:0);D.gp=D.gp||{days:{},log:[]};D.gp.days[t]=(D.gp.days[t]||0)+n;D.gp.log.push({date:t,g,n,pb:pb?1:0});D.gp.log=D.gp.log.slice(-200);const gm=guardPush(1,false,pb);save();render();try{vsBoard()}catch(e){}
+ gain(before,(txt?txt+"<br>":"")+"+"+GPT[g]+"❤️"+(pb?"<br><b>🏆 記録更新！+10</b>":"")+"<br><small>🛡️ "+gm+"</small>")}
 function lvOf(p){let i=0;LV.forEach((l,j)=>{if(p>=l[0])i=j});return i}
 function toast(t){const e=document.getElementById("toast");e.innerHTML=t;e.classList.remove("go");void e.offsetWidth;e.classList.add("go");for(let i=0;i<10;i++){const h=document.createElement("div");h.className="heart";h.textContent=["💕","💗","💖","✨","🩷"][i%5];h.style.left=(40+Math.random()*20)+"vw";h.style.top="55vh";h.style.setProperty("--x",(Math.random()*160-80)+"px");h.style.setProperty("--r",(Math.random()*90-45)+"deg");document.body.appendChild(h);setTimeout(()=>h.remove(),1700)}}
 function gain(before,txt){try{couple(true)}catch(e){};const a=total(D),lb=lvOf(before),la=lvOf(a);toast(txt);if(la>lb)setTimeout(()=>{document.getElementById("lvupPet").textContent=LV[la][2];document.getElementById("lvupName").textContent="Lv"+(la+1)+" 「"+LV[la][1]+"」になったよ！";document.getElementById("lvup").classList.add("on")},1500);
@@ -200,8 +206,8 @@ function gain(before,txt){try{couple(true)}catch(e){};const a=total(D),lb=lvOf(b
 document.getElementById("lvup").onclick=function(){this.classList.remove("on")};
 let calY,calM;{const t=new Date();calY=t.getFullYear();calM=t.getMonth()}
 function render(){if(window.couple&&document.getElementById('couple'))try{couple(false)}catch(e){}const p=total(D),i=lvOf(p),nx=LV[i+1];
- pet.textContent=LV[i][2];lvName.textContent="Lv"+(i+1)+" "+LV[i][1];ptsTotal.textContent=p;
- lvBar.style.width=(nx?Math.round((p-LV[i][0])/(nx[0]-LV[i][0])*100):100)+"%";const dp=dayPts(D,today());dayCap.innerHTML="きょうの愛情pt "+dp+"/"+CAP+(dayRaw(D,today())>=CAP?" ・ 💕今日はもう満タン！続きはまた明日ね♡":"");lvNext.textContent=nx?"つぎの「"+nx[1]+"」まであと "+(nx[0]-p)+"pt":"最高レベル！ずーっと一緒だよ💍";
+ pet.textContent=LV[i][2];lvName.textContent="Lv"+(i+1)+" "+LV[i][1];ptsTotal.textContent=p;try{guardRender();const g=D.guard;if(g&&g.pen)lvNext.dataset.pen=1}catch(e){}
+ lvBar.style.width=(nx?Math.round((p-LV[i][0])/(nx[0]-LV[i][0])*100):100)+"%";const dp=dayPts(D,today());dayCap.innerHTML="きょうの愛情pt "+dp+"/"+CAP+(dayRaw(D,today())>=CAP?" ・ 💕今日はもう満タン！続きはまた明日ね♡":"");lvNext.textContent=(D.guard&&D.guard.pen?"（もらった "+totalRaw(D)+"pt − ペナルティ "+(totalRaw(D)-p)+"pt）":"")+(nx?"つぎの「"+nx[1]+"」まであと "+(nx[0]-p)+"pt":"最高レベル！ずーっと一緒だよ💍");
  const got=D.bonus.indexOf(today())>=0;bonusTx.textContent=got?"きょうのボーナスはもらったよ♡ また明日ね（連続 "+streak()+" 日）":"ノートをひらいてくれてありがと♡ +"+BONUS+"pt もらえるよ";bonusBtn.style.display=got?"none":"";
  const srt=D.entries.slice().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:(b.ts||0)-(a.ts||0));
  recent.innerHTML=srt.slice(0,3).map(card).join("")||'<div style="opacity:.6;font-size:14px">まだないよ。最初の思い出を書こう♡</div>';
@@ -215,7 +221,25 @@ function renderCal(){const first=new Date(calY,calM,1),n=new Date(calY,calM+1,0)
  for(let d=1;d<=n;d++){const k=calY+"-"+String(calM+1).padStart(2,"0")+"-"+String(d).padStart(2,"0"),es=D.entries.filter(e=>e.date===k),love=es.some(e=>e.type!=="ふつうの日");
   h+='<div class="'+(love?"love":es.length?"any":"")+(k===t?" td":"")+'">'+d+(love?"<br>💕":es.length?"<br>☕":"")+'</div>'}cal.innerHTML=h}
 cPrev.onclick=()=>{if(--calM<0){calM=11;calY--}renderCal()};cNext.onclick=()=>{if(++calM>11){calM=0;calY++}renderCal()};
-bonusBtn.onclick=()=>{if(D.bonus.indexOf(today())>=0)return;const b=total(D);D.bonus.push(today());save();render();gain(b,"🎁 +"+BONUS+"pt<br><small>ログインボーナス！</small>")};
+bonusBtn.onclick=()=>{if(D.bonus.indexOf(today())>=0)return;const b=total(D);D.bonus.push(today());const gm=guardPush(2,true);save();render();gain(b,"🎁 +"+BONUS+"pt<br><small>ログインボーナス！</small><br>🛡️ "+gm)};
+/* ===== 🛡️ ゆずを守る（ワルイアクマ） local only ===== */
+function dstr(x){return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0")}
+function guardEval(){const t=today();if(!D.guard){const y=new Date();y.setDate(y.getDate()-1);D.guard={base:totalRaw(D),pen:0,streak:0,streakPen:0,devil:0,captured:0,rescue:0,lastEval:dstr(y),log:[]};save();return}
+ const g=D.guard,c=new Date(g.lastEval+"T12:00:00");let ch=0;for(;;){c.setDate(c.getDate()+1);const k=dstr(c);if(k>=t)break;ch=1;
+  if(D.bonus.indexOf(k)>=0){g.streak=0;g.streakPen=0;continue}g.streak++;g.devil=Math.min(5,g.devil+1);
+  if(g.streak>=2&&g.streakPen<30){const n=Math.min(3,30-g.streakPen);g.streakPen+=n;g.pen+=n;g.log.push({date:k,pen:n})}
+  if(g.devil>=5&&!g.captured){g.captured=1;g.rescue=0}}
+ if(ch){const y=new Date();y.setDate(y.getDate()-1);g.lastEval=dstr(y);g.log=g.log.slice(-60);save()}}
+function guardPush(n,claim,rec){const g=D.guard;if(!g)return"";g.devil=Math.max(0,g.devil-n);let m="ゆずを守った！😈が"+n+"歩さがったよ";
+ if(g.captured){if(claim)g.rescue++;if(rec||g.rescue>=3){g.captured=0;g.rescue=0;g.devil=Math.min(g.devil,2);m="ゆずを助け出した！エイジ大好き〜💖"}else{g.devil=5;m="救出まであと"+(3-g.rescue)+"日！がんばって〜🥺"}}
+ setTimeout(()=>{const e=document.getElementById("gdDev");if(e){e.classList.remove("gdpush");void e.offsetWidth;e.classList.add("gdpush")}},50);return m}
+function guardRender(){const g=D.guard;if(!g||!document.getElementById("gdBox"))return;const dv=g.devil,L=["😈 ワルイアクマは遠くでお昼寝中…ゆずは安心だよ♡","😈「ふふふ…ゆずちゃんかわいいな〜」まだ遠いよ","😈が近づいてきた！ゆず「エイジ、そばにいてね🥺」","ゆず「ちょっと引っぱられてる〜！エイジ助けて〜！」","ゆず「エイジ助けて〜！もうすぐ連れてかれちゃう😭」","😈にゆずがさらわれちゃった！ポイントゲット3日で助けてね（ゲームで記録更新でも救出！）"];
+ gdMeter.innerHTML=[0,1,2,3,4].map(i=>'<span style="opacity:'+(i<dv?1:.25)+'">😈</span>').join("");
+ gdStage.style.justifyContent=g.captured?"flex-start":"space-between";gdDev.style.marginLeft=(g.captured?0:Math.max(0,(5-dv)*14))+"%";gdY.textContent=g.captured?"🍊🫧":"🍊";
+ gdMsg.textContent=g.captured?L[5]+"（"+g.rescue+"/3）":L[dv];gdPen.textContent=g.pen?"ペナルティ累計 −"+g.pen+"pt（守ってる最低ライン "+g.base+"pt）":"ペナルティなし✨"}
+guardEval();
+(function(){const cd=document.getElementById("couple").closest(".card"),el=document.createElement("div");el.className="card";el.id="gdBox";
+ el.innerHTML='<style>.gdpush{animation:gdp .8s}@keyframes gdp{40%{transform:translateX(40px) rotate(20deg) scale(.8)}}</style><h2>🛡️ ゆずを守る</h2><div style="font-size:13px">毎日「ポイントゲット」で😈を2歩、ゲーム1回で1歩おいかえせるよ。1日休むのはOK、2日目から −3pt/日（最大 −30）</div><div style="font-size:22px;margin:6px 0">ワルイアクマ <span id="gdMeter"></span></div><div id="gdStage" style="display:flex;align-items:center;font-size:40px;background:#fff0f6;border-radius:16px;padding:6px 10px"><span id="gdY">🍊</span><span id="gdDev" style="display:inline-block">😈</span></div><div id="gdMsg" style="font-weight:800;color:#d6336c;margin-top:6px"></div><div id="gdPen" style="font-size:12.5px;opacity:.85;margin-top:4px"></div>';cd.after(el);guardRender()})();
 function form(e){e=e||{date:today(),type:"イチャイチャ",who:"エイジ",mood:"🥰",title:"",text:""};const ov=document.createElement("div");ov.className="ov";
  ov.innerHTML='<div class="sheet"><h2 style="color:#e2457a;margin:0">'+(e.id?"✏️ 思い出をなおす":"✏️ きょうの思い出")+'</h2><label>📅 日付</label><input type="date" id="fD" value="'+e.date+'"><label>💗 どんな日？</label><div class="chips" id="fT">'+TYPES.map(t=>'<button data-v="'+t+'" class="'+(t===e.type?"on":"")+'">'+EMO[t]+' '+t+' <small>+'+PTS[t]+'</small></button>').join("")+'</div>'+
  '<label>✍️ 書いた人</label><div class="chips" id="fW">'+["エイジ","ゆず"].map(w=>'<button data-v="'+w+'" class="'+(w===e.who?"on":"")+'">'+(w==="ゆず"?"🍊 ゆず":"🙋‍♂️ エイジ")+'</button>').join("")+'</div>'+
@@ -246,7 +270,8 @@ wipeBtn.onclick=()=>{if(!confirm("このノートに入力した中身をすべ�
 function sendData(full){const t=today(),from=new Date();from.setDate(from.getDate()-7);const fk=from.toISOString().slice(0,10);
  const es=D.entries.filter(e=>full||e.date>=fk).map(e=>[e.date,e.type,e.who,e.mood||"",e.title||"",(e.text||"").slice(0,full?99999:120)]);
  return {app:"love",v:1,date:t,sent:t+"T"+new Date().toTimeString().slice(0,5),pts:total(D),lv:lvOf(total(D))+1,lvName:LV[lvOf(total(D))][1],badges:D.badges,cap:CAP,todayPts:dayPts(D,t),bonusToday:D.bonus.indexOf(t)>=0?1:0,
-  entries:es,likes:{eiji:D.likes.eiji.map(l=>[l.date,l.name]),yuzu:D.likes.yuzu.map(l=>[l.date,l.name])},full:full?1:0}}
+  entries:es,likes:{eiji:D.likes.eiji.map(l=>[l.date,l.name]),yuzu:D.likes.yuzu.map(l=>[l.date,l.name])},games:gameSum(),guard:D.guard||null,rawPts:totalRaw(D),full:full?1:0}}
+function gameSum(){const G=window.__G||{mem:{},num:{}},R=raceD(),t=today(),lg=(D.gp&&D.gp.log)||[];return {gamePts:gpSum(D),todayGamePts:(D.gp&&D.gp.days[t])||0,plays:lg.filter(x=>x.date===t).length,eiji:{race:best(R.eiji),mole:(D.mole||{}).best||0,mem:G.mem.best||0,num:G.num.best||0},yuzu:(function(){try{const y=JSON.parse(localStorage.getItem("ln_yuzu_rec")).records;return {race:y.race.v,mole:y.mole.v,mem:y.mem.v,num:y.num.v}}catch(e){return null}})()}}
 function openSend(){const t=today(),intro=n=>"ゆずへ💌 きょうの愛情ノートだよ♡\n愛情ポイント "+total(D)+"pt / Lv"+(lvOf(total(D))+1)+" "+LV[lvOf(total(D))][1]+(n?"\n（"+n+"）":"");
  const base=sendData(false),l2=Object.assign({},base,{entries:base.entries.map(e=>e.slice(0,5).concat([""]))}),l3=Object.assign({},l2,{entries:l2.entries.slice(-5),likes:{eiji:base.likes.eiji.slice(-5),yuzu:[]},lite:"min"});
  return window.__lastSend=yuzuSend({subject:"ゆず・由依・まいへ 愛情ノート "+t,intro:intro,levels:[{data:base,note:""},{data:l2,note:"本文は短くしたよ"},{data:l3,note:"最近5件だけ"}],full:sendData(true),fullNote:"ぜんぶのデータ",
@@ -278,7 +303,7 @@ function rReset(){if(rs&&rs.raf)cancelAnimationFrame(rs.raf);rs=null;rPos(rE,0);
 function rLoop(){if(!rs)return;const t=(performance.now()-rs.t0)/1000,by=best(raceD().yuzu)||9.8;rT.textContent=t.toFixed(2);rPos(rY,t/by);if(!rs.done)rs.raf=requestAnimationFrame(rLoop)}
 tapBtn.addEventListener("pointerdown",e=>{e.preventDefault();if(rs&&rs.done)return;if(!rs){rs={n:0,t0:performance.now()};rMsg.textContent="がんばれ〜！📣";rLoop()}
  rs.n++;rPos(rE,rs.n/GOAL);if(rs.n>=GOAL){rs.done=1;const sec=Math.round((performance.now()-rs.t0)/10)/100,R=raceD(),by=best(R.yuzu),pb=best(R.eiji);R.eiji.push({date:today(),sec});save();rT.textContent=sec.toFixed(2);tapBtn.disabled=true;
-  rMsg.textContent=sec<by?"🎉 ゆずに勝った！":"🍊 ゆずの勝ち♡";toast((sec<by?"🏆 "+sec.toFixed(2)+"秒！<br><small>ゆずに勝っちゃった！くやし〜💕</small>":"🏃 "+sec.toFixed(2)+"秒<br><small>ゆずのほうが速かったね♡ またね！</small>")+(pb==null||sec<pb?"<br><small>✨自己ベスト更新✨</small>":""));rRender()}});
+  rMsg.textContent=sec<by?"🎉 ゆずに勝った！":"🍊 ゆずの勝ち♡";award("race",pb==null||sec<pb,(sec<by?"🏆 "+sec.toFixed(2)+"秒！<br><small>ゆずに勝っちゃった！くやし〜💕</small>":"🏃 "+sec.toFixed(2)+"秒<br><small>ゆずのほうが速かったね♡ またね！</small>")+(pb==null||sec<pb?"<br><small>✨自己ベスト更新✨</small>":""));rRender()}});
 rReset.onclick=rReset;rRender();
 /* ===== ふたりの距離 ===== */
 const STEP=350;
@@ -302,13 +327,13 @@ const MSG=["ちゅき♡","つかまっちゃった〜😳","エイジの指、�
   const pb=sc>D.mole.best;if(pb)D.mole.best=sc;D.mole.hist.push({date:today(),score:sc});D.mole.hist=D.mole.hist.slice(-30);mB.textContent=D.mole.best;
   D.moleDays=D.moleDays||[];const before=total(D);let extra="";if(D.moleDays.indexOf(today())<0){D.moleDays.push(today());}save();render();const gainP=total(D)-before;
   mMsg.textContent=(pb?"✨自己ベスト "+sc+"こ！ ":sc+"こキャッチ！ ")+"ゆず、いっぱいつかまえてもらえて幸せ〜♡";
-  if(gainP>0)gain(before,"💖 +"+gainP+"pt<br><small>ハートキャッチ "+sc+"こ"+(pb?"・ベスト更新！":"")+"</small>");else toast("💖 "+sc+"こ！<br><small>"+((D.mole.hist.filter(h=>h.date===today()).length>1)?"きょうのptはもうもらったよ♡":"きょうの愛情ptは満タンだよ♡")+"</small>")}
+  award("mole",pb,"💖 "+sc+"こキャッチ！"+(gainP>0?"<br><small>きょうのボーナス +"+gainP+"pt</small>":""))}
  mGo.onclick=()=>{if(run)return;run={s:0,t:30};mS.textContent=0;mT.textContent=30;mMsg.textContent="がんばって〜！";mGo.disabled=true;mGo.textContent="キャッチ中…";
   run.iv=setInterval(()=>{run.t--;mT.textContent=run.t;if(run.t<=0)end()},1000);spawn()};
  window.__mole={end:()=>{run.t=0;end()}}})();
 /* ===== 🃏 神経衰弱 / 🔢 数字タッチ (own key ln_minigames only) ===== */
 (function(){const MK="ln_minigames";let G;try{G=JSON.parse(localStorage.getItem(MK))||{}}catch(e){G={}}G.mem=G.mem||{best:0,hist:[]};G.num=G.num||{best:0,hist:[]};
- function sv(){try{localStorage.setItem(MK,JSON.stringify(G))}catch(e){}}const $=id=>document.getElementById(id),f=x=>x?x.toFixed(2)+"秒":"-";
+ window.__G=G;function sv(){try{localStorage.setItem(MK,JSON.stringify(G))}catch(e){}}const $=id=>document.getElementById(id),f=x=>x?x.toFixed(2)+"秒":"-";
  function shuf(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
  function rec(o,sec,extra){const pb=!o.best||sec<o.best;if(pb)o.best=sec;o.hist.push(Object.assign({date:today(),sec},extra||{}));o.hist=o.hist.slice(-30);sv();return pb}
  $("gmB").textContent=f(G.mem.best);$("gnB").textContent=f(G.num.best);
@@ -317,16 +342,27 @@ const MSG=["ちゅき♡","つかまっちゃった〜😳","エイジの指、�
  $("gmGo").onclick=()=>{if(m&&m.raf)cancelAnimationFrame(m.raf);const deck=shuf(EM.concat(EM)),g=$("gmG");g.innerHTML="";m={t0:0,miss:0,got:0,open:[],lock:0};$("gmM").textContent=0;$("gmT").textContent="0.00";$("gmMsg").textContent="めくったらスタート！";$("gmGo").textContent="🔄 やりなおし";
   deck.forEach(e=>{const c=document.createElement("div");c.className="mc";c.textContent=e;c.addEventListener("pointerdown",ev=>{ev.preventDefault();if(!m||m.done||m.lock||c.classList.contains("op")||c.classList.contains("ok"))return;
    if(!m.t0){m.t0=performance.now();$("gmMsg").textContent="がんばって〜♡";mTick()}c.classList.add("op");m.open.push(c);if(m.open.length<2)return;
-   const[a,b]=m.open;m.open=[];if(a.textContent===b.textContent){a.classList.replace("op","ok");b.classList.replace("op","ok");if(++m.got===8){m.done=1;const sec=Math.round((performance.now()-m.t0)/10)/100;$("gmT").textContent=sec.toFixed(2);const pb=rec(G.mem,sec,{miss:m.miss});$("gmB").textContent=f(G.mem.best);$("gmMsg").textContent=(pb?"✨自己ベスト！ ":"クリア！ ")+sec.toFixed(2)+"秒・ミス"+m.miss+"回";toast("🃏 "+sec.toFixed(2)+"秒"+(pb?"<br><small>ベスト更新！</small>":""))}}
+   const[a,b]=m.open;m.open=[];if(a.textContent===b.textContent){a.classList.replace("op","ok");b.classList.replace("op","ok");if(++m.got===8){m.done=1;const sec=Math.round((performance.now()-m.t0)/10)/100;$("gmT").textContent=sec.toFixed(2);const pb=rec(G.mem,sec,{miss:m.miss});$("gmB").textContent=f(G.mem.best);$("gmMsg").textContent=(pb?"✨自己ベスト！ ":"クリア！ ")+sec.toFixed(2)+"秒・ミス"+m.miss+"回";award("mem",pb,"🃏 "+sec.toFixed(2)+"秒")}}
    else{m.miss++;$("gmM").textContent=m.miss;m.lock=1;setTimeout(()=>{a.classList.remove("op");b.classList.remove("op");if(m)m.lock=0},650)}});g.appendChild(c)})};
  let n=null;function nTick(){if(!n||n.done)return;$("gnT").textContent=((performance.now()-n.t0)/1000).toFixed(2);n.raf=requestAnimationFrame(nTick)}
  $("gnGo").onclick=()=>{if(n&&n.raf)cancelAnimationFrame(n.raf);const g=$("gnG");g.innerHTML="";n={t0:0,next:1};$("gnN").textContent=1;$("gnT").textContent="0.00";$("gnMsg").textContent="1をタッチでスタート！";$("gnGo").textContent="🔄 やりなおし";
   shuf([...Array(25)].map((_,i)=>i+1)).forEach(k=>{const c=document.createElement("div");c.className="nt";c.textContent=k;c.addEventListener("pointerdown",ev=>{ev.preventDefault();if(!n||n.done||c.classList.contains("dn"))return;
    if(k!==n.next){c.classList.remove("ng");void c.offsetWidth;c.classList.add("ng");return}if(k===1){n.t0=performance.now();$("gnMsg").textContent="その調子♡";nTick()}c.classList.add("dn");n.next++;$("gnN").textContent=Math.min(n.next,25);
-   if(k===25){n.done=1;const sec=Math.round((performance.now()-n.t0)/10)/100;$("gnT").textContent=sec.toFixed(2);const pb=rec(G.num,sec);$("gnB").textContent=f(G.num.best);$("gnMsg").textContent=(pb?"✨自己ベスト！ ":"クリア！ ")+sec.toFixed(2)+"秒";toast("🔢 "+sec.toFixed(2)+"秒"+(pb?"<br><small>ベスト更新！</small>":""))}});g.appendChild(c)})};
+   if(k===25){n.done=1;const sec=Math.round((performance.now()-n.t0)/10)/100;$("gnT").textContent=sec.toFixed(2);const pb=rec(G.num,sec);$("gnB").textContent=f(G.num.best);$("gnMsg").textContent=(pb?"✨自己ベスト！ ":"クリア！ ")+sec.toFixed(2)+"秒";award("num",pb,"🔢 "+sec.toFixed(2)+"秒")}});g.appendChild(c)})};
 })();
 couple(false);
-
+/* ===== 🏆 VS board (ゆずの記録は data/yuzu_records.json) ===== */
+const YRK="ln_yuzu_rec",YDEF={records:{race:{v:9.8},mole:{v:24},mem:{v:42.5},num:{v:28.6}},history:[],line:""};
+function yRec(){try{return JSON.parse(localStorage.getItem(YRK))||YDEF}catch(e){return YDEF}}
+(function seed(){const R=raceD(),b=best(R.eiji);if(b==null||b>6.53){R.eiji.push({date:"2026-10-27",sec:6.53,from:"seed"});save()}})();
+function vsBoard(){const Y=yRec().records,G=window.__G||{mem:{},num:{}},R=raceD();
+ const rows=[["race","🏃","ラブラブマラソン",best(R.eiji),Y.race.v,0,"秒"],["mole","💖","ハートキャッチ",(D.mole||{}).best||0,Y.mole.v,1,"こ"],["mem","🃏","神経衰弱",G.mem.best||0,Y.mem.v,0,"秒"],["num","🔢","数字タッチ",G.num.best||0,Y.num.v,0,"秒"]];
+ vsB.innerHTML='<table style="width:100%;border-collapse:collapse;font-weight:800;font-size:14px;margin-top:8px"><tr style="color:#e2457a"><td>ゲーム</td><td style="text-align:center">🙋‍♂️エイジ</td><td style="text-align:center">🍊ゆず</td></tr>'+rows.map(r=>{const e=r[3],y=r[4],hi=r[5],has=!!e,win=has&&(hi?e>y:e<y),fm=v=>v?(r[6]==="秒"?(+v).toFixed(2):v)+r[6]:"-";return '<tr style="border-top:1px dashed #ffb3cb"><td>'+r[1]+r[2]+'</td><td style="text-align:center">'+fm(e)+(win?" 👑":"")+'</td><td style="text-align:center">'+fm(y)+(has&&!win&&e!==y?" 👑":"")+'</td></tr>'}).join("")+'</table>';
+ const Q=yRec();vsY.textContent=Q.line||"";vsH.innerHTML=(Q.history||[]).slice(-3).reverse().map(h=>"🍊 "+esc(h.date.slice(5).replace("-","/"))+" "+esc(GNM[h.game]||h.game)+" "+esc(h.from)+"→"+esc(h.to)).join("<br>")}
+function ySync(){fetch("data/yuzu_records.json?t="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).then(j=>{if(!j||!j.records)return;const old=yRec(),ch=(j.updated&&j.updated!==old.updated);localStorage.setItem(YRK,JSON.stringify(j));
+ const R=raceD(),rv=+j.records.race.v;if(rv>0&&!R.yuzu.some(x=>x.sec===rv)){R.yuzu.push({date:(j.updated||today()).slice(0,10),sec:rv,from:"server"});save();rRender()}
+ vsBoard();if(ch&&old.updated&&j.line)setTimeout(()=>toast("🍊 ゆずも記録更新したよ！<br><small>"+esc(j.line)+"</small>"),1200)}).catch(()=>{})}
+vsBoard();ySync();
 
 render();
 </script>
