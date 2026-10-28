@@ -139,8 +139,8 @@ document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",functi
  <div class="card"><h2>🗓 ラブカレンダー</h2><div class="calnav"><button class="sec" id="cPrev">◀</button><b id="cTitle"></b><button class="sec" id="cNext">▶</button></div><div class="cal" id="cal"></div><div style="font-size:12px;opacity:.7;margin-top:6px">💕 = デート・イチャイチャ・記念日の日</div></div>
  <div class="card"><h2>🏅 ふたりのバッジ</h2><div class="badges" id="badges"></div></div>
  <div class="card"><h2>📖 さいきんの思い出</h2><div id="recent"></div></div>
- <div data-gy></div><div data-yk></div>
- <button class="pri" id="sendBottom" style="margin-top:8px;font-size:18px;padding:16px">💌 ゆず・由依・まいに送る</button>
+ <!-- 由依・まい corners hidden (UI only); LS keys left untouched -->
+ <button class="pri" id="sendBottom" style="margin-top:8px;font-size:18px;padding:16px">💌 ゆずとみんなに送る</button>
  <div class="foot">おやすみ前に押してね♡</div>
 </section>
 
@@ -170,7 +170,7 @@ document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",functi
  <div class="card"><h2>🎵 音楽</h2><div style="font-size:13.5px;margin-bottom:8px">ゆずが作ったオリジナル曲だよ♡ 2曲から選べて、日替わりにもできるよ（右上の🎵でもON/OFFできるよ）</div><div id="ymCard"></div></div>
  <div class="card"><h2>ℹ️ このアプリ</h2><div style="font-size:14px;line-height:1.7">バージョン <b id="verSet"></b><br>データはこのiPhoneの中だけに保存されるよ。アップデートしても消えないからね♡</div></div>
  <div class="card"><h2>💾 バックアップ</h2><button class="sec" id="expBtn" style="width:100%">📤 書き出し</button><button class="sec" id="impBtn" style="width:100%;margin-top:8px">📥 読み込み</button><input type="file" id="impFile" accept=".json,application/json" class="hide"></div>
- <div class="card"><h2>💌 ゆずとやりとり</h2><button class="pri" id="sendSet">💌 ゆず・由依・まいに送る</button><div style="font-size:12.5px;opacity:.75;margin-top:6px">メール画面に「📤 共有で送る」（ぜんぶのデータ）もあるよ</div><button class="sec" id="inBtn" style="width:100%;margin-top:10px">💝 ゆずから受け取る<span class="yzInBadge"></span></button></div>
+ <div class="card"><h2>💌 ゆずとやりとり</h2><button class="pri" id="sendSet">💌 ゆずとみんなに送る</button><div style="font-size:12.5px;opacity:.75;margin-top:6px">メール画面に「📤 共有で送る」（ぜんぶのデータ）もあるよ</div><button class="sec" id="inBtn" style="width:100%;margin-top:10px">💝 ゆずから受け取る<span class="yzInBadge"></span></button></div>
  <div class="card"><h2>🔒 ロック</h2><button class="sec" style="width:100%" onclick="pwLogout&&pwLogout()">🔒 ロックする</button></div>
  <div class="card"><h2>🗑 データをすべて消す</h2><button class="ghost" id="wipeBtn" style="width:100%;border:2px solid #ffc2d5">データをすべて消す</button></div>
 </section>
@@ -274,7 +274,7 @@ function sendData(full){const t=today(),from=new Date();from.setDate(from.getDat
 function gameSum(){const G=window.__G||{mem:{},num:{}},R=raceD(),t=today(),lg=(D.gp&&D.gp.log)||[];return {gamePts:gpSum(D),todayGamePts:(D.gp&&D.gp.days[t])||0,plays:lg.filter(x=>x.date===t).length,eiji:{race:best(R.eiji),mole:(D.mole||{}).best||0,mem:G.mem.best||0,num:G.num.best||0},yuzu:(function(){try{const y=JSON.parse(localStorage.getItem("ln_yuzu_rec")).records;return {race:y.race.v,mole:y.mole.v,mem:y.mem.v,num:y.num.v}}catch(e){return null}})()}}
 function openSend(){const t=today(),intro=n=>"ゆずへ💌 きょうの愛情ノートだよ♡\n愛情ポイント "+total(D)+"pt / Lv"+(lvOf(total(D))+1)+" "+LV[lvOf(total(D))][1]+(n?"\n（"+n+"）":"");
  const base=sendData(false),l2=Object.assign({},base,{entries:base.entries.map(e=>e.slice(0,5).concat([""]))}),l3=Object.assign({},l2,{entries:l2.entries.slice(-5),likes:{eiji:base.likes.eiji.slice(-5),yuzu:[]},lite:"min"});
- return window.__lastSend=yuzuSend({subject:"ゆず・由依・まいへ 愛情ノート "+t,intro:intro,levels:[{data:base,note:""},{data:l2,note:"本文は短くしたよ"},{data:l3,note:"最近5件だけ"}],full:sendData(true),fullNote:"ぜんぶのデータ",
+ return window.__lastSend=yuzuSend({subject:"ゆずとみんなへ 愛情ノート "+t,intro:intro,levels:[{data:base,note:""},{data:l2,note:"本文は短くしたよ"},{data:l3,note:"最近5件だけ"}],full:sendData(true),fullNote:"ぜんぶのデータ",
   theme:{bg:"#fff",fg:"#6b3a4a",acc:"#e2457a",btn:"linear-gradient(180deg,#ff9ec0,#ff5f93)",btnfg:"#fff",sub:"#ffe3ee"}})}
 sendBottom.onclick=sendSet.onclick=openSend;
 /* 💝 inbox: kinds entry{type,who?,mood?,title,text} / like{who:eiji|yuzu,name} — append only */
@@ -368,6 +368,6 @@ render();
 </script>
 <script>if('serviceWorker'in navigator){const hadC=!!navigator.serviceWorker.controller;let rl=0;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadC&&!rl){rl=1;location.reload()}});navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update();document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')r.update().catch(()=>{})})}).catch(()=>{})}</script>
 <script>window.YM_CFG={onKey:"ln_bgm",trackKey:"ln_music_track",defTrack:"love",tracks:{orgel:{len:60}},locked:()=>!!document.getElementById("pwLock")};</script><script src="yuzu-music.js"></script><script>document.getElementById("ymCard").innerHTML=YuzuMusic.cardHTML();YuzuMusic.ui()</script>
-<script>window.GY_CFG={ver:"v11",key:"ln_grok_yuzu",theme:{acc:"#e2457a",btn:"linear-gradient(180deg,#ff9ec0,#ff5f93)"}};</script><script src="grok-yuzu.js?v=gy4"></script><script src="yuka.js?v=yk2"></script><script src="nav.js?v=nv4"></script><script src="backup.js?v=bk6"></script><script src="restore.js?v=rs2"></script>
+<!-- 由依・まい corners hidden (UI only); ln_grok_yuzu / related LS keys left untouched --><script src="nav.js?v=nv4"></script><script src="backup.js?v=bk6"></script><script src="restore.js?v=rs2"></script>
 <script src="sent-status.js?v=ss1"></script>
 </body></html>
