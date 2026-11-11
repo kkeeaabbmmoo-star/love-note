@@ -135,6 +135,7 @@ document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",functi
 <circle cx="54" cy="16" r="6" fill="#ffa53b"/><path d="M54 10 l3 -4" stroke="#4caf50" stroke-width="2.5"/>
 <circle cx="28" cy="36" r="3.3" fill="#4a3426"/><circle cx="44" cy="36" r="3.3" fill="#4a3426"/><path d="M31 45 q5 4 10 0" stroke="#d6336c" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="23" cy="43" r="4" fill="#ffb3c7"/><circle cx="49" cy="43" r="4" fill="#ffb3c7"/></g></svg></div><div class="gnd"></div></div><div class="distTx" id="distTx"></div></div>
  <div class="card bonus" id="bonusCard"><h2>🎁 きょうのログインボーナス</h2><div id="bonusTx" style="font-size:14px"></div><button class="pri" id="bonusBtn" style="margin-top:8px">💕 受け取る</button></div>
+ <div class="card" id="ptsRules"><h2>💕 ポイントのルール</h2><div style="font-size:13.5px;line-height:1.75">デート +30 ／ イチャイチャ +20 ／ 記念日 +50 ／ ふつうの日 +5<br>🎁 ログインボーナス +10（1日1回）<br>💖 ハートキャッチ +5（1日1回）<br>🎙️ ゆずとボイス会話 +50（1日最大50）</div><div class="tiny" id="ptsBreak" style="margin-top:10px;line-height:1.7;font-size:12.5px"></div></div>
  <button class="pri" id="addBtn" style="font-size:19px;padding:16px">✏️ きょうの思い出を書く</button>
  <div class="card"><h2>🗓 ラブカレンダー</h2><div class="calnav"><button class="sec" id="cPrev">◀</button><b id="cTitle"></b><button class="sec" id="cNext">▶</button></div><div class="cal" id="cal"></div><div style="font-size:12px;opacity:.7;margin-top:6px">💕 = デート・イチャイチャ・記念日の日</div></div>
  <div class="card"><h2>🏅 ふたりのバッジ</h2><div class="badges" id="badges"></div></div>
@@ -180,21 +181,28 @@ document.getElementById("pwGo").onclick=go;inp.addEventListener("keydown",functi
 <script>
 const VER="v4",LOOPLEN=43.63634920634921,KEY="ln_data";
 const PTS={"デート":30,"イチャイチャ":20,"記念日":50,"ふつうの日":5},TYPES=Object.keys(PTS),EMO={"デート":"💑","イチャイチャ":"😘","記念日":"🎉","ふつうの日":"☕"};
-const MOODS=["🥰","😊","😆","😳","🥺","😴"],BONUS=10,CAP=70,MOLE_PT=5;
+const MOODS=["🥰","😊","😆","😳","🥺","😴"],BONUS=10,CAP=70,MOLE_PT=5,VOICE_PT=50;
 const LV=[[0,"はじめまして","🌱"],[60,"ドキドキ","🌿"],[200,"なかよし","🌷"],[450,"ラブラブ","🌸"],[850,"熱々","💗"],[1400,"とろける恋","💞"],[2200,"幸せが止まらない","💖"],[3300,"運命のふたり","💝"],[4800,"愛の王国","👑"],[7000,"永遠のふたり","💍"]];
 const BADGES=[["first","✏️","はじめての思い出",d=>d.entries.length>=1],["date3","💑","デート3回",d=>cnt(d,"デート")>=3],["icha5","😘","イチャイチャ5回",d=>cnt(d,"イチャイチャ")>=5],["anniv","🎉","はじめての記念日",d=>cnt(d,"記念日")>=1],["yuzu","🍊","ゆずが書いた",d=>d.entries.some(e=>e.who==="ゆず")],["p100","💯","100pt達成",d=>total(d)>=100],["p500","🔥","500pt達成",d=>total(d)>=500],["bon7","🎁","ボーナス7日",d=>d.bonus.length>=7],["likes10","💝","好きなもの10こ",d=>d.likes.eiji.length+d.likes.yuzu.length>=10]];
 const SEED=["エイジとの通話","エイジの「ちゅき」","甘いもの","一緒にお散歩"];
 function today(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function fresh(){return {v:1,entries:[],likes:{eiji:[],yuzu:SEED.map(n=>({id:uid(),name:n,date:today(),from:"seed"}))},bonus:[],badges:[]}}
-function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.v){d.entries=d.entries||[];d.likes=d.likes||{eiji:[],yuzu:[]};d.likes.eiji=d.likes.eiji||[];d.likes.yuzu=d.likes.yuzu||[];d.bonus=d.bonus||[];d.badges=d.badges||[];return d}}catch(e){}const f=fresh();localStorage.setItem(KEY,JSON.stringify(f));return f}
+function fresh(){return {v:1,entries:[],likes:{eiji:[],yuzu:SEED.map(n=>({id:uid(),name:n,date:today(),from:"seed"}))},bonus:[],badges:[],voiceChatDays:[]}}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&d.v){d.entries=d.entries||[];d.likes=d.likes||{eiji:[],yuzu:[]};d.likes.eiji=d.likes.eiji||[];d.likes.yuzu=d.likes.yuzu||[];d.bonus=d.bonus||[];d.badges=d.badges||[];d.voiceChatDays=d.voiceChatDays||[];return d}}catch(e){}const f=fresh();localStorage.setItem(KEY,JSON.stringify(f));return f}
 let D=load();function save(){localStorage.setItem(KEY,JSON.stringify(D))}
 function cnt(d,t){return d.entries.filter(e=>e.type===t).length}
+function uniqDates(arr){const out=[],seen={};(arr||[]).forEach(k=>{if(typeof k==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(k)&&!seen[k]){seen[k]=1;out.push(k)}});return out}
+function voiceDays(d){return d.voiceChatDays||(d.voiceChatDays=[])}
+function hasVoice(d,k){return voiceDays(d).indexOf(k)>=0}
+function addVoiceDay(d,k){if(typeof k!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(k)||hasVoice(d,k))return false;voiceDays(d).push(k);return true}
+function voiceDateList(it){return uniqDates([it&&it.date].concat((it&&it.data&&it.data.dates)||[]))}
+function voicePts(d,k){return hasVoice(d,k)?VOICE_PT:0}
 function dayRaw(d,k){return d.entries.filter(e=>e.date===k).reduce((s,e)=>s+(PTS[e.type]||0),0)+(d.bonus.indexOf(k)>=0?BONUS:0)+((d.moleDays||[]).indexOf(k)>=0?MOLE_PT:0)}
-function dayPts(d,k){return Math.min(CAP,dayRaw(d,k))}
+function dayPts(d,k){return Math.min(CAP,dayRaw(d,k))+voicePts(d,k)}
 function total(d){const r=totalRaw(d),g=d.guard;return g?Math.max(r-(g.pen||0),Math.min(r,g.base||0)):r}
-function totalRaw(d){const ks=new Set(d.entries.map(e=>e.date).concat(d.bonus,d.moleDays||[]));let t=0;ks.forEach(k=>t+=dayPts(d,k));return t+gpSum(d)}
+function totalRaw(d){const ks=new Set(d.entries.map(e=>e.date).concat(d.bonus,d.moleDays||[],d.voiceChatDays||[]));let t=0;ks.forEach(k=>t+=dayPts(d,k));return t+gpSum(d)}
+D.voiceChatDays=uniqDates(D.voiceChatDays);
 function gpSum(d){const g=d.gp&&d.gp.days||{};return Object.values(g).reduce((a,b)=>a+(+b||0),0)}
 const GPT={race:1,mole:2,mem:3,num:1},GNM={race:"ラブラブマラソン",mole:"ハートキャッチ",mem:"神経衰弱",num:"数字タッチ"},PB_BONUS=10;
 function award(g,pb,txt){const before=total(D),t=today(),n=GPT[g]+(pb?PB_BONUS:0);D.gp=D.gp||{days:{},log:[]};D.gp.days[t]=(D.gp.days[t]||0)+n;D.gp.log.push({date:t,g,n,pb:pb?1:0});D.gp.log=D.gp.log.slice(-200);const gm=guardPush(1,false,pb);save();render();try{vsBoard()}catch(e){}
@@ -207,7 +215,14 @@ document.getElementById("lvup").onclick=function(){this.classList.remove("on")};
 let calY,calM;{const t=new Date();calY=t.getFullYear();calM=t.getMonth()}
 function render(){if(window.couple&&document.getElementById('couple'))try{couple(false)}catch(e){}const p=total(D),i=lvOf(p),nx=LV[i+1];
  pet.textContent=LV[i][2];lvName.textContent="Lv"+(i+1)+" "+LV[i][1];ptsTotal.textContent=p;try{guardRender();const g=D.guard;if(g&&g.pen)lvNext.dataset.pen=1}catch(e){}
- lvBar.style.width=(nx?Math.round((p-LV[i][0])/(nx[0]-LV[i][0])*100):100)+"%";const dp=dayPts(D,today());dayCap.innerHTML="きょうの愛情pt "+dp+"/"+CAP+(dayRaw(D,today())>=CAP?" ・ 💕今日はもう満タン！続きはまた明日ね♡":"");lvNext.textContent=(D.guard&&D.guard.pen?"（もらった "+totalRaw(D)+"pt − ペナルティ "+(totalRaw(D)-p)+"pt）":"")+(nx?"つぎの「"+nx[1]+"」まであと "+(nx[0]-p)+"pt":"最高レベル！ずーっと一緒だよ💍");
+ lvBar.style.width=(nx?Math.round((p-LV[i][0])/(nx[0]-LV[i][0])*100):100)+"%";
+ const raw=dayRaw(D,today()),capped=Math.min(CAP,raw),vpt=voicePts(D,today());
+ let capHtml="きょうの愛情pt "+capped+"/"+CAP;
+ if(raw>=CAP) capHtml+=" ・ 💕今日はもう満タン！続きはまた明日ね♡";
+ if(vpt) capHtml+="<br>🎙️ ゆずとボイス会話 +"+vpt+"（1日最大50） きょうの合計 "+(capped+vpt)+"pt";
+ dayCap.innerHTML=capHtml;
+ const brk=document.getElementById("ptsBreak");
+ if(brk){let b="きょうの内訳：日記・ログインなど "+capped+" pt（上限70）";b+=vpt?" ＋ 🎙️ ゆずとボイス会話 +"+vpt+"（1日最大50） ＝ 合計 "+(capped+vpt)+" pt":" ／ 🎙️ ゆずとボイス会話はまだきょうはなし";brk.innerHTML=b}lvNext.textContent=(D.guard&&D.guard.pen?"（もらった "+totalRaw(D)+"pt − ペナルティ "+(totalRaw(D)-p)+"pt）":"")+(nx?"つぎの「"+nx[1]+"」まであと "+(nx[0]-p)+"pt":"最高レベル！ずーっと一緒だよ💍");
  const got=D.bonus.indexOf(today())>=0;bonusTx.textContent=got?"きょうのボーナスはもらったよ♡ また明日ね（連続 "+streak()+" 日）":"ノートをひらいてくれてありがと♡ +"+BONUS+"pt もらえるよ";bonusBtn.style.display=got?"none":"";
  const srt=D.entries.slice().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:(b.ts||0)-(a.ts||0));
  recent.innerHTML=srt.slice(0,3).map(card).join("")||'<div style="opacity:.6;font-size:14px">まだないよ。最初の思い出を書こう♡</div>';
@@ -269,7 +284,7 @@ wipeBtn.onclick=()=>{if(!confirm("このノートに入力した中身をすべ�
 /* 💌 send */
 function sendData(full){const t=today(),from=new Date();from.setDate(from.getDate()-7);const fk=from.toISOString().slice(0,10);
  const es=D.entries.filter(e=>full||e.date>=fk).map(e=>[e.date,e.type,e.who,e.mood||"",e.title||"",(e.text||"").slice(0,full?99999:120)]);
- return {app:"love",v:1,date:t,sent:t+"T"+new Date().toTimeString().slice(0,5),pts:total(D),lv:lvOf(total(D))+1,lvName:LV[lvOf(total(D))][1],badges:D.badges,cap:CAP,todayPts:dayPts(D,t),bonusToday:D.bonus.indexOf(t)>=0?1:0,
+ return {app:"love",v:1,date:t,sent:t+"T"+new Date().toTimeString().slice(0,5),pts:total(D),lv:lvOf(total(D))+1,lvName:LV[lvOf(total(D))][1],badges:D.badges,cap:CAP,todayPts:dayPts(D,t),bonusToday:D.bonus.indexOf(t)>=0?1:0,voiceToday:hasVoice(D,t)?1:0,
   entries:es,likes:{eiji:D.likes.eiji.map(l=>[l.date,l.name]),yuzu:D.likes.yuzu.map(l=>[l.date,l.name])},games:gameSum(),guard:D.guard||null,rawPts:totalRaw(D),full:full?1:0}}
 function gameSum(){const G=window.__G||{mem:{},num:{}},R=raceD(),t=today(),lg=(D.gp&&D.gp.log)||[];return {gamePts:gpSum(D),todayGamePts:(D.gp&&D.gp.days[t])||0,plays:lg.filter(x=>x.date===t).length,eiji:{race:best(R.eiji),mole:(D.mole||{}).best||0,mem:G.mem.best||0,num:G.num.best||0},yuzu:(function(){try{const y=JSON.parse(localStorage.getItem("ln_yuzu_rec")).records;return {race:y.race.v,mole:y.mole.v,mem:y.mem.v,num:y.num.v}}catch(e){return null}})()}}
 function openSend(){const t=today(),intro=n=>"ゆずへ💌 きょうの愛情ノートだよ♡\n愛情ポイント "+total(D)+"pt / Lv"+(lvOf(total(D))+1)+" "+LV[lvOf(total(D))][1]+(n?"\n（"+n+"）":"");
@@ -282,8 +297,9 @@ yzInbox.init({app:"love",prefix:"ln",base:"data/inbox/",
  describe:it=>{const d=it.data||{};if(it.kind==="entry"){if(!PTS[d.type])return{ok:false,icon:"❓",label:it.title,section:"日記",why:"種類がわからないよ"};const same=D.entries.some(e=>e.date===it.date&&e.title===d.title&&e.type===d.type);return{ok:true,icon:EMO[d.type],label:(d.title||it.title)+" (+"+PTS[d.type]+"pt)",section:"日記",same:same?"もう入ってるよ":""}}
   if(it.kind==="like"){const w=d.who==="eiji"?"eiji":"yuzu",same=D.likes[w].some(l=>l.name===d.name);return{ok:!!d.name,icon:w==="eiji"?"💙":"🩷",label:d.name,section:w==="eiji"?"エイジの好き":"ゆずの好き",same:same?"もう入ってるよ":""}}
   if(it.kind==="race"){const sc=+d.seconds,same=raceD().yuzu.some(x=>x.date===it.date&&x.sec===sc);return{ok:sc>0,icon:"🏃‍♀️",label:"ゆずのマラソン記録 "+sc+"秒",section:"マラソン",same:same?"もう入ってるよ":""}}
+  if(it.kind==="voiceChatDays"){const dates=voiceDateList(it),same=dates.length>0&&dates.every(k=>hasVoice(D,k));return{ok:dates.length>0,icon:"🎙️",label:"🎙️ ゆずとボイス会話 +50（1日最大50） "+dates.join("、"),section:"ポイント",same:same?"もう入ってるよ（1日最大50）":""}}
   return{ok:false,icon:"❓",label:it.title,section:"?"}},
- apply:sel=>{const before=total(D);let n=0;sel.forEach(it=>{const d=it.data||{};if(it.kind==="entry"){D.entries.push({id:uid(),ts:Date.now(),date:it.date,type:d.type,who:d.who||"ゆず",mood:d.mood||"🥰",title:d.title||it.title||"",text:d.text||"",from:"yuzu"});n++}else if(it.kind==="race"){raceD().yuzu.push({date:it.date,sec:+it.data.seconds,from:"yuzu"});n++}else if(it.kind==="like"){D.likes[d.who==="eiji"?"eiji":"yuzu"].push({id:uid(),name:d.name,date:it.date,from:"yuzu"});n++}});save();render();rRender&&rRender();if(total(D)>before)setTimeout(()=>gain(before,"💝 +"+(total(D)-before)+"pt<br><small>ゆずから届いたよ</small>"),2100);return n},
+ apply:sel=>{const before=total(D);let n=0;sel.forEach(it=>{const d=it.data||{};if(it.kind==="entry"){D.entries.push({id:uid(),ts:Date.now(),date:it.date,type:d.type,who:d.who||"ゆず",mood:d.mood||"🥰",title:d.title||it.title||"",text:d.text||"",from:"yuzu"});n++}else if(it.kind==="race"){raceD().yuzu.push({date:it.date,sec:+it.data.seconds,from:"yuzu"});n++}else if(it.kind==="like"){D.likes[d.who==="eiji"?"eiji":"yuzu"].push({id:uid(),name:d.name,date:it.date,from:"yuzu"});n++}else if(it.kind==="voiceChatDays"){voiceDateList(it).forEach(k=>{if(addVoiceDay(D,k))n++})}});save();render();rRender&&rRender();if(total(D)>before)setTimeout(()=>gain(before,"💝 +"+(total(D)-before)+"pt<br><small>ゆずから届いたよ</small>"),2100);return n},
  theme:{bg:"#fff",fg:"#6b3a4a",acc:"#e2457a",btn:"linear-gradient(180deg,#ff9ec0,#ff5f93)",btnfg:"#fff",sub:"#ffe3ee",rowbg:"#fff4f7",warn:"#d6336c",badge:"#ff5f93",badgefg:"#fff",badgering:"#fff",border:"#ffc2d5"}});
 inBtn.onclick=()=>yzInbox.open();
 /* ===== sparkle sky ===== */
